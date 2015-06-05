@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Import;
  */
 
 @Configuration
-@ComponentScan(basePackages = "com.car.dealer")
+@ComponentScan(basePackages = "com.yaroslav.hotel")
 @Import(DatabaseConfig.class)
 public class AppConfig {
 
