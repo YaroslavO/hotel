@@ -11,4 +11,5 @@ import java.util.List;
 public interface HotelRoomDao {
     void addHotelRoom(HotelRoom hotelRoom);
     List<HotelRoom> getAllRoom();
+    void deleteHotelRoom(HotelRoom room);
 }

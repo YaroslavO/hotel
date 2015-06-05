@@ -29,4 +29,11 @@ public class HotelRoomDaoImpl implements HotelRoomDao {
                 .createCriteria(HotelRoom.class)
                 .list();
     }
+
+    @Override
+    public void deleteHotelRoom(HotelRoom room) {
+        sessionFactory
+                .getCurrentSession()
+                .delete(room);
+    }
 }
