@@ -1,5 +1,6 @@
 package com.yaroslav.hotel.dao;
 
+import com.yaroslav.hotel.AbstractDataBaseTest;
 import com.yaroslav.hotel.entity.ClassHotelRoom;
 import com.yaroslav.hotel.entity.DateReservation;
 import com.yaroslav.hotel.entity.HotelRoom;
@@ -20,7 +21,7 @@ import static org.hamcrest.Matchers.*;
  * Created by employee on 6/5/15.
  */
 
-public class HotelRoomDaoTest extends AbstractDaoTest{
+public class HotelRoomDataBaseTest extends AbstractDataBaseTest {
 
     @Autowired
     private HotelRoomDao hotelRoom;

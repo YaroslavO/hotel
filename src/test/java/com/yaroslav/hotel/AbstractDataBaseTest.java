@@ -1,4 +1,4 @@
-package com.yaroslav.hotel.dao;
+package com.yaroslav.hotel;
 
 import com.yaroslav.hotel.config.AppConfig;
 import org.junit.runner.RunWith;
@@ -12,5 +12,5 @@ import org.springframework.transaction.annotation.Transactional;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {AppConfig.class})
 @Transactional
-public abstract class AbstractDaoTest {
+public abstract class AbstractDataBaseTest {
 }
