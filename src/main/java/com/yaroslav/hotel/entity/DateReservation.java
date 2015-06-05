@@ -4,6 +4,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -13,7 +14,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "date_reservation")
-public class DateReservation {
+public class DateReservation implements Comparable{
 
     @Id
     @GeneratedValue
@@ -53,5 +54,24 @@ public class DateReservation {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        DateReservation otherDateReservation = (DateReservation) o;
+        Date thisDate = setHourMinuteSecondMillisecondInZero(date);
+        Date otherDate = setHourMinuteSecondMillisecondInZero(otherDateReservation.date);
+        return thisDate.compareTo(otherDate);
+    }
+
+    private Date setHourMinuteSecondMillisecondInZero(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.HOUR, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        Date newDate = calendar.getTime();
+        return newDate;
     }
 }

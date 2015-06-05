@@ -74,5 +74,31 @@ public class HotelRoomDaoTest extends AbstractDaoTest{
 
         assertThat(room.getReservationPeriod().size(), is(1));
         assertThat(room.getReservationPeriod().get(0).getId(), not(comparesEqualTo(null)));
+        assertThat(room.getReservationPeriod().get(0).getDate(), is(dateReservation));
+    }
+
+    @Test
+    @Rollback
+    public void reservationRoomOnCustomCountDay() throws Exception {
+        HotelRoom room = new HotelRoom();
+        room.setClassRoom(ClassHotelRoom.STANDARD);
+        room.setType(TypeHotelRoom.SGL);
+        hotelRoom.addHotelRoom(room);
+
+        Calendar calendar = Calendar.getInstance();
+        List<DateReservation> reservationPeriod = new ArrayList<>();
+
+        for (int numberDate = 1; numberDate <= 7; numberDate++) {
+            DateReservation dateReservationRoom = new DateReservation();
+            calendar.set(2015, Calendar.JUNE, numberDate);
+            Date dateReservation = calendar.getTime();
+            dateReservationRoom.setDate(dateReservation);
+            reservationPeriod.add(dateReservationRoom);
+        }
+        room.setReservationPeriod(reservationPeriod);
+
+        assertThat(room.getReservationPeriod().get(0).getId(), not(comparesEqualTo(null)));
+        assertThat(room.getReservationPeriod().size(), is(7));
+        assertThat(room.getReservationPeriod(), is(comparesEqualTo(reservationPeriod)));
     }
 }
