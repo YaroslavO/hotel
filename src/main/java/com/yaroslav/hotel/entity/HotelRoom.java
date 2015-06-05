@@ -15,12 +15,7 @@ public class HotelRoom {
     @Id
     @GeneratedValue
     @Column(name = "id")
-    private int Integer;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @JoinColumn(name = "fk_hotel")
-    private Hotel hotel;
+    private Integer id;
 
     @Column(name = "type", nullable = false)
     @Enumerated(value = EnumType.STRING)
@@ -38,20 +33,12 @@ public class HotelRoom {
             inverseJoinColumns = {@JoinColumn(name = "fk_date_reservation", referencedColumnName = "id")})
     private List<DateReservation> reservationPeriod;
 
-    public int getInteger() {
-        return Integer;
+    public Integer getId() {
+        return id;
     }
 
-    public void setInteger(int integer) {
-        Integer = integer;
-    }
-
-    public Hotel getHotel() {
-        return hotel;
-    }
-
-    public void setHotel(Hotel hotel) {
-        this.hotel = hotel;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public TypeHotelRoom getType() {

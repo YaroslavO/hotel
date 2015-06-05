@@ -46,4 +46,12 @@ public class DateReservation {
     public void setRoom(List<HotelRoom> room) {
         this.room = room;
     }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
 }
