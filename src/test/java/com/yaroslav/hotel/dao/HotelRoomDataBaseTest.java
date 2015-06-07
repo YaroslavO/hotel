@@ -28,7 +28,6 @@ public class HotelRoomDataBaseTest extends AbstractDataBaseTest {
     private HotelRoomDao hotelRoom;
 
     @Test
-    @Rollback(true)
     public void createNewHotelRoom() throws Exception {
         HotelRoom room = new HotelRoom();
         room.setClassRoom(ClassHotelRoom.ECONOM);
@@ -38,7 +37,6 @@ public class HotelRoomDataBaseTest extends AbstractDataBaseTest {
     }
 
     @Test
-    @Rollback(true)
     public void getAllHotelRoom() throws Exception {
         List<HotelRoom> rooms = hotelRoom.getAllHotelRoom();
 
@@ -57,7 +55,6 @@ public class HotelRoomDataBaseTest extends AbstractDataBaseTest {
     }
 
     @Test
-    @Rollback(true)
     public void reservationRoomOnOneDay() throws Exception {
         Calendar calendar = Calendar.getInstance();
         calendar.set(2015, Calendar.JUNE, 9);
@@ -80,7 +77,6 @@ public class HotelRoomDataBaseTest extends AbstractDataBaseTest {
     }
 
     @Test
-    @Rollback(true)
     public void reservationRoomOnCustomCountDay() throws Exception {
         HotelRoom room = new HotelRoom();
         room.setClassRoom(ClassHotelRoom.STANDARD);
@@ -105,7 +101,6 @@ public class HotelRoomDataBaseTest extends AbstractDataBaseTest {
     }
 
     @Test
-    @Rollback(true)
     public void deleteRoomHotelById() throws Exception {
         //given
         HotelRoom room = new HotelRoom();
