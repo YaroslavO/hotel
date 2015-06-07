@@ -21,9 +21,14 @@ public class HotelRoomDaoImpl implements HotelRoomDao {
         sessionFactory.getCurrentSession().save(hotelRoom);
     }
 
+    @Override
+    public void updateHotelRoom(HotelRoom hotelRoom) {
+        sessionFactory.getCurrentSession().update(hotelRoom);
+    }
+
     @SuppressWarnings("unchecked")
     @Override
-    public List<HotelRoom> getAllRoom() {
+    public List<HotelRoom> getAllHotelRoom() {
         return sessionFactory
                 .getCurrentSession()
                 .createCriteria(HotelRoom.class)
