@@ -16,7 +16,7 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 /**
  * Created by employee on 6/5/15.
@@ -32,8 +32,13 @@ public class HotelRoomDataBaseTest extends AbstractDataBaseTest {
         HotelRoom room = new HotelRoom();
         room.setClassRoom(ClassHotelRoom.ECONOM);
         room.setType(TypeHotelRoom.DBL);
+
+        assertNull(room.getId());
+
         hotelRoom.addHotelRoom(room);
-        assertThat(room.getId(), not(comparesEqualTo(null)));
+
+        assertNotNull(room.getId());
+        assertTrue(room.getId() > 0);
     }
 
     @Test
@@ -44,7 +49,7 @@ public class HotelRoomDataBaseTest extends AbstractDataBaseTest {
         createHotelRoom(TypeHotelRoom.DBL, ClassHotelRoom.STANDARD);
         List<HotelRoom> roomsAfterCreate = hotelRoom.getAllHotelRoom();
 
-        assertThat(roomsAfterCreate, not(rooms));
+        assertNotEquals(rooms, roomsAfterCreate);
     }
 
     private void createHotelRoom(TypeHotelRoom typeRoom, ClassHotelRoom classRoom) {

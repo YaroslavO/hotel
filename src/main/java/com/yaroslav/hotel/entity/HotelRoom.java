@@ -33,6 +33,14 @@ public class HotelRoom {
             inverseJoinColumns = {@JoinColumn(name = "fk_date_reservation", referencedColumnName = "id")})
     private List<DateReservation> reservationPeriod;
 
+    public HotelRoom() {
+    }
+
+    public HotelRoom(TypeHotelRoom type, ClassHotelRoom classRoom) {
+        this.type = type;
+        this.classRoom = classRoom;
+    }
+
     public Integer getId() {
         return id;
     }

@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface HotelRoomDao {
     void addHotelRoom(HotelRoom hotelRoom);
-    void updateHotelRoom(HotelRoom hotelRoom);
+    HotelRoom updateHotelRoom(HotelRoom hotelRoom);
     List<HotelRoom> getAllHotelRoom();
     void deleteHotelRoom(HotelRoom room);
 }

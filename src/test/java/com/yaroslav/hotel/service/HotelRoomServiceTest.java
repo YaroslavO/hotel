@@ -3,51 +3,153 @@ package com.yaroslav.hotel.service;
 import com.yaroslav.hotel.AbstractDataBaseTest;
 import com.yaroslav.hotel.dao.HotelRoomDao;
 import com.yaroslav.hotel.entity.ClassHotelRoom;
+import com.yaroslav.hotel.entity.DateReservation;
 import com.yaroslav.hotel.entity.HotelRoom;
 import com.yaroslav.hotel.entity.TypeHotelRoom;
+import com.yaroslav.hotel.exception.ReservationHotelRoomException;
+import com.yaroslav.hotel.util.HotelHelper;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 /**
  * Created by PC on 05.06.2015.
  */
 
 public class HotelRoomServiceTest extends AbstractDataBaseTest {
 
-    @Mock
     private HotelRoomDao hotelRoomDao;
-
-    @InjectMocks
-    @Autowired
     private HotelRoomService hotelRoomService;
-
-    private Calendar calendar;
-    private HotelRoom room;
+    private Calendar dayInCalendar;
 
     @Before
     public void setUp() throws Exception {
-        MockitoAnnotations.initMocks(this);
-        calendar = Calendar.getInstance();
-        calendar.set(2015, Calendar.MARCH, 20);
-        room = new HotelRoom();
-        room.setType(TypeHotelRoom.SGL);
-        room.setClassRoom(ClassHotelRoom.ECONOM);
+        hotelRoomDao = mock(HotelRoomDao.class);
+        hotelRoomService = new HotelRoomServiceImpl(hotelRoomDao);
+        dayInCalendar = Calendar.getInstance();
+        dayInCalendar.set(Calendar.YEAR, 2015);
+
+        when(hotelRoomDao.updateHotelRoom(any(HotelRoom.class))).thenAnswer(new Answer<HotelRoom>() {
+
+            @Override
+            public HotelRoom answer(InvocationOnMock invocationOnMock) throws Throwable {
+                HotelRoom hotelRoom = (HotelRoom) invocationOnMock.getArguments()[0];
+                return hotelRoom;
+            }
+        });
     }
 
     @Test
-    public void reservationHotelRoomForOneDay() throws Exception {
+    public void reservationHotelRoomOnOneDay() throws Exception {
+        //given
+        dayInCalendar.set(2015, Calendar.JUNE, 24);
+        Date dateReservation = HotelHelper.getDateWithHourMinuteSecondsMilisecondInZero(dayInCalendar);
+        HotelRoom hotelRoom = new HotelRoom(TypeHotelRoom.SGL, ClassHotelRoom.ECONOM);
+        hotelRoom.setId(1);
 
+        hotelRoomService.reservation(hotelRoom, dateReservation);
+
+        //than
+        assertThat(hotelRoom.getReservationPeriod(), not(comparesEqualTo(null)));
+        assertThat(hotelRoom.getReservationPeriod().get(0).getDate(), is(dateReservation));
     }
 
-    // TODO try with mock
     @Test
-    public void reservationHotelRoomForSomeCountDay() throws Exception {
+    public void reservationHotelRoomOnSomeCountDay() throws Exception {
+        //given
+        List<Date> period = new ArrayList<>();
 
+        for (int numberDay = 1; numberDay <= 20; numberDay++) {
+            dayInCalendar.set(Calendar.DAY_OF_YEAR, numberDay);
+            Date date = HotelHelper.getDateWithHourMinuteSecondsMilisecondInZero(dayInCalendar);
+            period.add(date);
+        }
 
+        HotelRoom hotelRoom = new HotelRoom(TypeHotelRoom.SGL, ClassHotelRoom.ECONOM);
+        hotelRoom.setId(1);
+
+        //when
+        hotelRoomService.reservation(hotelRoom, period);
+
+        //than
+        assertThat(hotelRoom.getReservationPeriod(), not(comparesEqualTo(null)));
+        assertThat(hotelRoom.getReservationPeriod().size(), is(period.size()));
+
+        for (int numberDay = 0; numberDay < period.size(); numberDay++) {
+            assertThat(hotelRoom.getReservationPeriod().get(numberDay).getDate(), is(period.get(numberDay)));
+        }
+    }
+
+    @Test
+    public void reservationHotelRoomWithExistsReservationPeriod() throws Exception {
+        HotelRoom hotelRoom = new HotelRoom(TypeHotelRoom.SGL, ClassHotelRoom.ECONOM);
+        hotelRoom.setId(1);
+        prepareHotelRoomWithExistingPeriod(hotelRoom);
+
+        List<DateReservation> existingPeriod = new ArrayList<>();
+        existingPeriod.addAll(hotelRoom.getReservationPeriod());
+        List<Date> periodForAdd = new ArrayList<>();
+
+        for (int numberDay = 30; numberDay <= 40; numberDay++) {
+            dayInCalendar.set(Calendar.DAY_OF_YEAR, numberDay);
+            Date date = HotelHelper.getDateWithHourMinuteSecondsMilisecondInZero(dayInCalendar);
+            periodForAdd.add(date);
+        }
+
+        hotelRoomService.reservation(hotelRoom, periodForAdd);
+        List<DateReservation> allPeriod = new ArrayList<>();
+        allPeriod.addAll(hotelRoom.getReservationPeriod());
+
+        assertThat(existingPeriod.size(), not(allPeriod.size()));
+        assertThat(existingPeriod, not(equalTo(allPeriod)));
+        assertTrue(allPeriod.containsAll(existingPeriod));
+    }
+
+    private void prepareHotelRoomWithExistingPeriod(HotelRoom hotelRoom) throws ReservationHotelRoomException {
+        //given
+        List<Date> existingPeriod = new ArrayList<>();
+
+        for (int numberDay = 1; numberDay <= 20; numberDay++) {
+            dayInCalendar.set(Calendar.DAY_OF_YEAR, numberDay);
+            Date date = HotelHelper.getDateWithHourMinuteSecondsMilisecondInZero(dayInCalendar);
+            existingPeriod.add(date);
+        }
+
+        //when
+        hotelRoomService.reservation(hotelRoom, existingPeriod);
+    }
+
+    @Test
+    public void attemptToReserveTheRoomTwiceInOneDay() throws Exception {
+        //given
+        dayInCalendar.set(2015, Calendar.JUNE, 24);
+        Date dateReservation = HotelHelper.getDateWithHourMinuteSecondsMilisecondInZero(dayInCalendar);
+        HotelRoom hotelRoom = new HotelRoom(TypeHotelRoom.SGL, ClassHotelRoom.ECONOM);
+        hotelRoom.setId(1);
+
+        hotelRoomService.reservation(hotelRoom, dateReservation);
+
+        Date newDateReservation = HotelHelper.getDateWithHourMinuteSecondsMilisecondInZero(dayInCalendar);
+
+        //than
+        try {
+            hotelRoomService.reservation(hotelRoom, newDateReservation);
+        } catch (Exception e) {
+            Assert.assertThat(e, instanceOf(ReservationHotelRoomException.class));
+        }
     }
 }

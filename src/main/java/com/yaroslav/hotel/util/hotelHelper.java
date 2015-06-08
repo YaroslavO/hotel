@@ -6,7 +6,7 @@ import java.util.Date;
 /**
  * Created by PC on 06.06.2015.
  */
-public class hotelHelper {
+public class HotelHelper {
 
     public static Date getDateWithHourMinuteSecondsMilisecondInZero(Calendar calendar) {
         Calendar newDate = Calendar.getInstance();
