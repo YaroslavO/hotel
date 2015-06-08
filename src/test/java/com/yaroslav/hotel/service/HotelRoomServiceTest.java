@@ -96,6 +96,7 @@ public class HotelRoomServiceTest extends AbstractDataBaseTest {
 
     @Test
     public void reservationHotelRoomWithExistsReservationPeriod() throws Exception {
+        //given
         HotelRoom hotelRoom = new HotelRoom(TypeHotelRoom.SGL, ClassHotelRoom.ECONOM);
         hotelRoom.setId(1);
         prepareHotelRoomWithExistingPeriod(hotelRoom);
@@ -110,17 +111,19 @@ public class HotelRoomServiceTest extends AbstractDataBaseTest {
             periodForAdd.add(date);
         }
 
+        //when
         hotelRoomService.reservation(hotelRoom, periodForAdd);
         List<DateReservation> allPeriod = new ArrayList<>();
         allPeriod.addAll(hotelRoom.getReservationPeriod());
 
+        //than
         assertThat(existingPeriod.size(), not(allPeriod.size()));
         assertThat(existingPeriod, not(equalTo(allPeriod)));
         assertTrue(allPeriod.containsAll(existingPeriod));
     }
 
     private void prepareHotelRoomWithExistingPeriod(HotelRoom hotelRoom) throws ReservationHotelRoomException {
-        //given
+
         List<Date> existingPeriod = new ArrayList<>();
 
         for (int numberDay = 1; numberDay <= 20; numberDay++) {
@@ -143,6 +146,7 @@ public class HotelRoomServiceTest extends AbstractDataBaseTest {
 
         hotelRoomService.reservation(hotelRoom, dateReservation);
 
+        //when
         Date newDateReservation = HotelHelper.getDateWithHourMinuteSecondsMilisecondInZero(dayInCalendar);
 
         //than
