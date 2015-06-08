@@ -26,13 +26,9 @@ public class HotelRoom {
     @Enumerated(value = EnumType.STRING)
     private BudgetRoomType classRoom;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "hotelRoom", fetch = FetchType.LAZY)
     @LazyCollection(LazyCollectionOption.FALSE)
-    @JoinTable(
-            name = "room_to_reservation",
-            joinColumns = {@JoinColumn(name = "fk_room", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "fk_reservation", referencedColumnName = "id")})
-    private List<Reservation> reservationPeriod;
+    private List<Reservation> reservation;
 
     public HotelRoom() {
     }
@@ -66,11 +62,11 @@ public class HotelRoom {
         this.classRoom = classRoom;
     }
 
-    public List<Reservation> getReservationPeriod() {
-        return reservationPeriod;
+    public List<Reservation> getReservation() {
+        return reservation;
     }
 
-    public void setReservationPeriod(List<Reservation> reservationPeriod) {
-        this.reservationPeriod = reservationPeriod;
+    public void setReservation(List<Reservation> reservation) {
+        this.reservation = reservation;
     }
 }

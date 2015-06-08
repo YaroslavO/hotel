@@ -1,6 +1,7 @@
 package com.yaroslav.hotel.service;
 
 import com.yaroslav.hotel.dao.HotelRoomDao;
+import com.yaroslav.hotel.entity.Period;
 import com.yaroslav.hotel.entity.Reservation;
 import com.yaroslav.hotel.entity.HotelRoom;
 import com.yaroslav.hotel.entity.Parameter;
@@ -39,51 +40,53 @@ public class HotelRoomServiceImpl implements HotelRoomService {
     }
 
     @Override
+    public List<HotelRoom> searchHotelRoomByParameter(Period period) {
+        return null;
+    }
+
+    @Override
     public List<HotelRoom> searchHotelRoomByParameter(Parameter parameter) {
         return hotelRoom.searchHotelRoomByParameter(parameter);
     }
 
     @Override
     public void reservation(HotelRoom room, Date date) throws ReflectiveOperationException {
-        Reservation reservation = new Reservation();
-        reservation.setDate(date);
+        Period period = new Period(date);
+        Reservation reservation = new Reservation(period);
 
         List<Reservation> oneDayReservation = new ArrayList<>();
         oneDayReservation.add(reservation);
 
-        if (room.getReservationPeriod() != null) {
+        if (room.getReservation() != null) {
             List<Reservation> oldReservation = new ArrayList<>();
-            oldReservation.addAll(room.getReservationPeriod());
+            oldReservation.addAll(room.getReservation());
             if (oldReservation.containsAll(oneDayReservation)) {
                 throw new ReflectiveOperationException();
             }
         }
 
-        room.setReservationPeriod(oneDayReservation);
+        room.setReservation(oneDayReservation);
         hotelRoom.updateHotelRoom(room);
     }
 
+    // TODO change this code
     @Override
-    public void reservation(HotelRoom room, List<Date> dates) throws ReservationHotelRoomException {
+    public void reservation(HotelRoom room, Period period) throws ReservationHotelRoomException {
         List<Reservation> daysReservation = new ArrayList<>();
-        List<Reservation> reservationPeriodBefore = new ArrayList<>();
+        List<Reservation> oldReservationPeriodBefore = new ArrayList<>();
 
-        for (Date dateForReservation: dates) {
-            Reservation reservation = new Reservation();
-            reservation.setDate(dateForReservation);
-            daysReservation.add(reservation);
-        }
+        Reservation reservation = new Reservation(period);
 
-        if (room.getReservationPeriod() != null) {
-            if (reservationPeriodBefore.containsAll(daysReservation)) {
+        if (room.getReservation() != null) {
+            if (oldReservationPeriodBefore.containsAll(daysReservation)) {
                 throw new ReservationHotelRoomException();
             }
 
-            reservationPeriodBefore = room.getReservationPeriod();
-            reservationPeriodBefore.addAll(daysReservation);
-            room.setReservationPeriod(reservationPeriodBefore);
+            oldReservationPeriodBefore = room.getReservation();
+            oldReservationPeriodBefore.addAll(daysReservation);
+            room.setReservation(oldReservationPeriodBefore);
         } else {
-            room.setReservationPeriod(daysReservation);
+            room.setReservation(daysReservation);
         }
 
         hotelRoom.updateHotelRoom(room);

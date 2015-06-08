@@ -4,33 +4,36 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 /**
- * Created by employee on 6/5/15.
+ * Created by employee on 6/8/15.
  */
 
 @Entity
 @Table(name = "reservations")
-public class Reservation implements Comparable{
+public class Reservation {
 
     @Id
     @GeneratedValue
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "date")
-    private Date date;
+    @Column(name = "start_date")
+    private Date startDate;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @Column(name = "end_date")
+    private Date endDate;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @LazyCollection(LazyCollectionOption.FALSE)
-    @JoinTable(
-            name = "room_to_reservation",
-            joinColumns = {@JoinColumn(name = "fk_reservation", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "fk_room", referencedColumnName = "id")})
-    private List<HotelRoom> room;
+    @JoinColumn(name = "fk_room")
+    private HotelRoom hotelRoom;
+
+    public Reservation(Period period) {
+        this.startDate = period.begin;
+        this.endDate = period.end;
+    }
 
     public Integer getId() {
         return id;
@@ -40,38 +43,27 @@ public class Reservation implements Comparable{
         this.id = id;
     }
 
-    public List<HotelRoom> getRoom() {
-        return room;
+    public Date getStartDate() {
+        return startDate;
     }
 
-    public void setRoom(List<HotelRoom> room) {
-        this.room = room;
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getEndDate() {
+        return endDate;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 
-    @Override
-    public int compareTo(Object o) {
-        Reservation otherReservation = (Reservation) o;
-        Date thisDate = setHourMinuteSecondMillisecondInZero(date);
-        Date otherDate = setHourMinuteSecondMillisecondInZero(otherReservation.date);
-        return thisDate.compareTo(otherDate);
+    public HotelRoom getHotelRoom() {
+        return hotelRoom;
     }
 
-    private Date setHourMinuteSecondMillisecondInZero(Date date) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        calendar.set(Calendar.HOUR, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        Date newDate = calendar.getTime();
-        return newDate;
+    public void setHotelRoom(HotelRoom hotelRoom) {
+        this.hotelRoom = hotelRoom;
     }
 }
