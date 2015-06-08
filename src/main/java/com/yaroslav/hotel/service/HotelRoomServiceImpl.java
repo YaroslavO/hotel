@@ -1,8 +1,9 @@
 package com.yaroslav.hotel.service;
 
 import com.yaroslav.hotel.dao.HotelRoomDao;
-import com.yaroslav.hotel.entity.DateReservation;
+import com.yaroslav.hotel.entity.Reservation;
 import com.yaroslav.hotel.entity.HotelRoom;
+import com.yaroslav.hotel.entity.Parameter;
 import com.yaroslav.hotel.exception.ReservationHotelRoomException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,15 +39,20 @@ public class HotelRoomServiceImpl implements HotelRoomService {
     }
 
     @Override
-    public void reservation(HotelRoom room, Date date) throws ReflectiveOperationException {
-        DateReservation dateReservation = new DateReservation();
-        dateReservation.setDate(date);
+    public List<HotelRoom> searchHotelRoomByParameter(Parameter parameter) {
+        return hotelRoom.searchHotelRoomByParameter(parameter);
+    }
 
-        List<DateReservation> oneDayReservation = new ArrayList<>();
-        oneDayReservation.add(dateReservation);
+    @Override
+    public void reservation(HotelRoom room, Date date) throws ReflectiveOperationException {
+        Reservation reservation = new Reservation();
+        reservation.setDate(date);
+
+        List<Reservation> oneDayReservation = new ArrayList<>();
+        oneDayReservation.add(reservation);
 
         if (room.getReservationPeriod() != null) {
-            List<DateReservation> oldReservation = new ArrayList<>();
+            List<Reservation> oldReservation = new ArrayList<>();
             oldReservation.addAll(room.getReservationPeriod());
             if (oldReservation.containsAll(oneDayReservation)) {
                 throw new ReflectiveOperationException();
@@ -59,13 +65,13 @@ public class HotelRoomServiceImpl implements HotelRoomService {
 
     @Override
     public void reservation(HotelRoom room, List<Date> dates) throws ReservationHotelRoomException {
-        List<DateReservation> daysReservation = new ArrayList<>();
-        List<DateReservation> reservationPeriodBefore = new ArrayList<>();
+        List<Reservation> daysReservation = new ArrayList<>();
+        List<Reservation> reservationPeriodBefore = new ArrayList<>();
 
         for (Date dateForReservation: dates) {
-            DateReservation dateReservation = new DateReservation();
-            dateReservation.setDate(dateForReservation);
-            daysReservation.add(dateReservation);
+            Reservation reservation = new Reservation();
+            reservation.setDate(dateForReservation);
+            daysReservation.add(reservation);
         }
 
         if (room.getReservationPeriod() != null) {

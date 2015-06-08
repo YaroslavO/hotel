@@ -1,10 +1,8 @@
 package com.yaroslav.hotel.service;
 
+import com.yaroslav.hotel.dao.AbstractDataBaseTest;
 import com.yaroslav.hotel.dao.HotelRoomDao;
-import com.yaroslav.hotel.entity.ClassHotelRoom;
-import com.yaroslav.hotel.entity.DateReservation;
-import com.yaroslav.hotel.entity.HotelRoom;
-import com.yaroslav.hotel.entity.TypeHotelRoom;
+import com.yaroslav.hotel.entity.*;
 import com.yaroslav.hotel.exception.ReservationHotelRoomException;
 import com.yaroslav.hotel.util.HotelHelper;
 import org.junit.Assert;
@@ -18,6 +16,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import static junit.framework.TestCase.assertNotNull;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertTrue;
@@ -29,7 +28,7 @@ import static org.mockito.Mockito.when;
  * Created by PC on 05.06.2015.
  */
 
-public class HotelRoomServiceTest {
+public class HotelRoomServiceTest extends AbstractDataBaseTest {
 
     private HotelRoomDao hotelRoomDao;
     private HotelRoomService hotelRoomService;
@@ -56,8 +55,8 @@ public class HotelRoomServiceTest {
     public void reservationHotelRoomOnOneDay() throws Exception {
         //given
         dayInCalendar.set(2015, Calendar.JUNE, 24);
-        Date dateReservation = HotelHelper.getDateWithHourMinuteSecondsMilisecondInZero(dayInCalendar);
-        HotelRoom hotelRoom = new HotelRoom(TypeHotelRoom.SGL, ClassHotelRoom.ECONOM);
+        Date dateReservation = HotelHelper.getDateWithHourMinuteSecondsMillisecondInZero(dayInCalendar);
+        HotelRoom hotelRoom = new HotelRoom(SizeRoomType.SGL, BudgetRoomType.ECONOM);
         hotelRoom.setId(1);
 
         hotelRoomService.reservation(hotelRoom, dateReservation);
@@ -74,11 +73,11 @@ public class HotelRoomServiceTest {
 
         for (int numberDay = 1; numberDay <= 20; numberDay++) {
             dayInCalendar.set(Calendar.DAY_OF_YEAR, numberDay);
-            Date date = HotelHelper.getDateWithHourMinuteSecondsMilisecondInZero(dayInCalendar);
+            Date date = HotelHelper.getDateWithHourMinuteSecondsMillisecondInZero(dayInCalendar);
             period.add(date);
         }
 
-        HotelRoom hotelRoom = new HotelRoom(TypeHotelRoom.SGL, ClassHotelRoom.ECONOM);
+        HotelRoom hotelRoom = new HotelRoom(SizeRoomType.SGL, BudgetRoomType.ECONOM);
         hotelRoom.setId(1);
 
         //when
@@ -96,23 +95,23 @@ public class HotelRoomServiceTest {
     @Test
     public void reservationHotelRoomWithExistsReservationPeriod() throws Exception {
         //given
-        HotelRoom hotelRoom = new HotelRoom(TypeHotelRoom.SGL, ClassHotelRoom.ECONOM);
+        HotelRoom hotelRoom = new HotelRoom(SizeRoomType.SGL, BudgetRoomType.ECONOM);
         hotelRoom.setId(1);
         prepareHotelRoomWithExistingPeriod(hotelRoom);
 
-        List<DateReservation> existingPeriod = new ArrayList<>();
+        List<Reservation> existingPeriod = new ArrayList<>();
         existingPeriod.addAll(hotelRoom.getReservationPeriod());
         List<Date> periodForAdd = new ArrayList<>();
 
         for (int numberDay = 30; numberDay <= 40; numberDay++) {
             dayInCalendar.set(Calendar.DAY_OF_YEAR, numberDay);
-            Date date = HotelHelper.getDateWithHourMinuteSecondsMilisecondInZero(dayInCalendar);
+            Date date = HotelHelper.getDateWithHourMinuteSecondsMillisecondInZero(dayInCalendar);
             periodForAdd.add(date);
         }
 
         //when
         hotelRoomService.reservation(hotelRoom, periodForAdd);
-        List<DateReservation> allPeriod = new ArrayList<>();
+        List<Reservation> allPeriod = new ArrayList<>();
         allPeriod.addAll(hotelRoom.getReservationPeriod());
 
         //than
@@ -127,7 +126,7 @@ public class HotelRoomServiceTest {
 
         for (int numberDay = 1; numberDay <= 20; numberDay++) {
             dayInCalendar.set(Calendar.DAY_OF_YEAR, numberDay);
-            Date date = HotelHelper.getDateWithHourMinuteSecondsMilisecondInZero(dayInCalendar);
+            Date date = HotelHelper.getDateWithHourMinuteSecondsMillisecondInZero(dayInCalendar);
             existingPeriod.add(date);
         }
 
@@ -139,14 +138,14 @@ public class HotelRoomServiceTest {
     public void attemptToReserveTheRoomTwiceInOneDay() throws Exception {
         //given
         dayInCalendar.set(2015, Calendar.JUNE, 24);
-        Date dateReservation = HotelHelper.getDateWithHourMinuteSecondsMilisecondInZero(dayInCalendar);
-        HotelRoom hotelRoom = new HotelRoom(TypeHotelRoom.SGL, ClassHotelRoom.ECONOM);
+        Date dateReservation = HotelHelper.getDateWithHourMinuteSecondsMillisecondInZero(dayInCalendar);
+        HotelRoom hotelRoom = new HotelRoom(SizeRoomType.SGL, BudgetRoomType.ECONOM);
         hotelRoom.setId(1);
 
         hotelRoomService.reservation(hotelRoom, dateReservation);
 
         //when
-        Date newDateReservation = HotelHelper.getDateWithHourMinuteSecondsMilisecondInZero(dayInCalendar);
+        Date newDateReservation = HotelHelper.getDateWithHourMinuteSecondsMillisecondInZero(dayInCalendar);
 
         //than
         try {
@@ -158,7 +157,6 @@ public class HotelRoomServiceTest {
 
     @Test
     public void searchHotelRoomOnSomePeriod() throws Exception {
-
 
     }
 }

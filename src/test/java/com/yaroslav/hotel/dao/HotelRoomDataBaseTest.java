@@ -1,9 +1,7 @@
 package com.yaroslav.hotel.dao;
 
-import com.yaroslav.hotel.entity.ClassHotelRoom;
-import com.yaroslav.hotel.entity.DateReservation;
-import com.yaroslav.hotel.entity.HotelRoom;
-import com.yaroslav.hotel.entity.TypeHotelRoom;
+import com.yaroslav.hotel.entity.*;
+import com.yaroslav.hotel.util.HotelHelper;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -12,7 +10,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.*;
 
@@ -25,11 +22,14 @@ public class HotelRoomDataBaseTest extends AbstractDataBaseTest {
     @Autowired
     private HotelRoomDao hotelRoom;
 
+    @Autowired
+    private ReservationDao reservationDao;
+
     @Test
     public void createNewHotelRoom() throws Exception {
         HotelRoom room = new HotelRoom();
-        room.setClassRoom(ClassHotelRoom.ECONOM);
-        room.setType(TypeHotelRoom.DBL);
+        room.setClassRoom(BudgetRoomType.ECONOM);
+        room.setType(SizeRoomType.DBL);
 
         assertNull(room.getId());
 
@@ -43,14 +43,14 @@ public class HotelRoomDataBaseTest extends AbstractDataBaseTest {
     public void getAllHotelRoom() throws Exception {
         List<HotelRoom> rooms = hotelRoom.getAllHotelRoom();
 
-        createHotelRoom(TypeHotelRoom.SGL, ClassHotelRoom.LUX);
-        createHotelRoom(TypeHotelRoom.DBL, ClassHotelRoom.STANDARD);
+        createHotelRoom(SizeRoomType.SGL, BudgetRoomType.LUX);
+        createHotelRoom(SizeRoomType.DBL, BudgetRoomType.STANDARD);
         List<HotelRoom> roomsAfterCreate = hotelRoom.getAllHotelRoom();
 
         assertNotEquals(rooms, roomsAfterCreate);
     }
 
-    private void createHotelRoom(TypeHotelRoom typeRoom, ClassHotelRoom classRoom) {
+    private void createHotelRoom(SizeRoomType typeRoom, BudgetRoomType classRoom) {
         HotelRoom room = new HotelRoom();
         room.setType(typeRoom);
         room.setClassRoom(classRoom);
@@ -64,14 +64,14 @@ public class HotelRoomDataBaseTest extends AbstractDataBaseTest {
         Date dateReservation = calendar.getTime();
 
         HotelRoom room = new HotelRoom();
-        room.setClassRoom(ClassHotelRoom.STANDARD);
-        room.setType(TypeHotelRoom.SGL);
+        room.setClassRoom(BudgetRoomType.STANDARD);
+        room.setType(SizeRoomType.SGL);
         hotelRoom.addHotelRoom(room);
 
-        DateReservation dateReservationRoom = new DateReservation();
-        dateReservationRoom.setDate(dateReservation);
-        List<DateReservation> reservationPeriod = new ArrayList<>();
-        reservationPeriod.add(dateReservationRoom);
+        Reservation reservationRoom = new Reservation();
+        reservationRoom.setDate(dateReservation);
+        List<Reservation> reservationPeriod = new ArrayList<>();
+        reservationPeriod.add(reservationRoom);
         room.setReservationPeriod(reservationPeriod);
 
         assertThat(room.getReservationPeriod().size(), is(1));
@@ -82,19 +82,19 @@ public class HotelRoomDataBaseTest extends AbstractDataBaseTest {
     @Test
     public void reservationRoomOnCustomCountDay() throws Exception {
         HotelRoom room = new HotelRoom();
-        room.setClassRoom(ClassHotelRoom.STANDARD);
-        room.setType(TypeHotelRoom.SGL);
+        room.setClassRoom(BudgetRoomType.STANDARD);
+        room.setType(SizeRoomType.SGL);
         hotelRoom.addHotelRoom(room);
 
         Calendar calendar = Calendar.getInstance();
-        List<DateReservation> reservationPeriod = new ArrayList<>();
+        List<Reservation> reservationPeriod = new ArrayList<>();
 
         for (int numberDate = 1; numberDate <= 7; numberDate++) {
-            DateReservation dateReservationRoom = new DateReservation();
+            Reservation reservationRoom = new Reservation();
             calendar.set(2015, Calendar.JUNE, numberDate);
             Date dateReservation = calendar.getTime();
-            dateReservationRoom.setDate(dateReservation);
-            reservationPeriod.add(dateReservationRoom);
+            reservationRoom.setDate(dateReservation);
+            reservationPeriod.add(reservationRoom);
         }
         room.setReservationPeriod(reservationPeriod);
 
@@ -109,8 +109,8 @@ public class HotelRoomDataBaseTest extends AbstractDataBaseTest {
         HotelRoom room = new HotelRoom();
 
         //when
-        room.setClassRoom(ClassHotelRoom.ECONOM);
-        room.setType(TypeHotelRoom.SGL);
+        room.setClassRoom(BudgetRoomType.ECONOM);
+        room.setType(SizeRoomType.SGL);
         hotelRoom.addHotelRoom(room);
 
 //        than
@@ -119,5 +119,36 @@ public class HotelRoomDataBaseTest extends AbstractDataBaseTest {
         hotelRoom.deleteHotelRoom(room);
 
         assertThat(hotelRoom.getAllHotelRoom().size(), is(0));
+    }
+
+    @Test
+    public void searchHotelRoomByDate() throws Exception {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(2015, Calendar.JUNE, 13);
+        Parameter dateParameter = new Parameter();
+        Date firstDate = HotelHelper.getDateWithHourMinuteSecondsMillisecondInZero(calendar);
+        dateParameter.period = new Period(firstDate);
+
+        HotelRoom room = new HotelRoom(SizeRoomType.DBL, BudgetRoomType.LUX);
+        hotelRoom.addHotelRoom(room);
+
+        List<Reservation> reservationPeriod = new ArrayList<>();
+        Reservation reservation = new Reservation();
+        reservation.setDate(firstDate);
+        reservationDao.save(reservation);
+
+        room = new HotelRoom(SizeRoomType.SGL, BudgetRoomType.LUX);
+        reservationPeriod.add(reservation);
+        room.setReservationPeriod(reservationPeriod);
+        hotelRoom.addHotelRoom(room);
+        List<HotelRoom> reservationRooms = new ArrayList<>();
+        reservationRooms.add(room);
+        reservation.setRoom(reservationRooms);
+
+        List<HotelRoom> rooms = hotelRoom.searchHotelRoomByParameter(dateParameter);
+
+        assertNotNull(rooms);
+    //    assertNotNull(rooms.get(0));
+//        assertTrue(rooms.size() == 1);
     }
 }

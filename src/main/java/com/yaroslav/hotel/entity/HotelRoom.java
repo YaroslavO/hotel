@@ -10,6 +10,7 @@ import java.util.List;
  * Created by employee on 6/5/15.
  */
 @Entity
+@Table(name = "hotel_room")
 public class HotelRoom {
 
     @Id
@@ -19,24 +20,24 @@ public class HotelRoom {
 
     @Column(name = "type", nullable = false)
     @Enumerated(value = EnumType.STRING)
-    private TypeHotelRoom type;
+    private SizeRoomType type;
 
     @Column(name = "class", nullable = false)
     @Enumerated(value = EnumType.STRING)
-    private ClassHotelRoom classRoom;
+    private BudgetRoomType classRoom;
 
     @OneToMany(fetch = FetchType.LAZY)
     @LazyCollection(LazyCollectionOption.FALSE)
     @JoinTable(
             name = "room_to_reservation",
             joinColumns = {@JoinColumn(name = "fk_room", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "fk_date_reservation", referencedColumnName = "id")})
-    private List<DateReservation> reservationPeriod;
+            inverseJoinColumns = {@JoinColumn(name = "fk_reservation", referencedColumnName = "id")})
+    private List<Reservation> reservationPeriod;
 
     public HotelRoom() {
     }
 
-    public HotelRoom(TypeHotelRoom type, ClassHotelRoom classRoom) {
+    public HotelRoom(SizeRoomType type, BudgetRoomType classRoom) {
         this.type = type;
         this.classRoom = classRoom;
     }
@@ -49,27 +50,27 @@ public class HotelRoom {
         this.id = id;
     }
 
-    public TypeHotelRoom getType() {
+    public SizeRoomType getType() {
         return type;
     }
 
-    public void setType(TypeHotelRoom type) {
+    public void setType(SizeRoomType type) {
         this.type = type;
     }
 
-    public ClassHotelRoom getClassRoom() {
+    public BudgetRoomType getClassRoom() {
         return classRoom;
     }
 
-    public void setClassRoom(ClassHotelRoom classRoom) {
+    public void setClassRoom(BudgetRoomType classRoom) {
         this.classRoom = classRoom;
     }
 
-    public List<DateReservation> getReservationPeriod() {
+    public List<Reservation> getReservationPeriod() {
         return reservationPeriod;
     }
 
-    public void setReservationPeriod(List<DateReservation> reservationPeriod) {
+    public void setReservationPeriod(List<Reservation> reservationPeriod) {
         this.reservationPeriod = reservationPeriod;
     }
 }

@@ -13,22 +13,22 @@ import java.util.List;
  */
 
 @Entity
-@Table(name = "date_reservation")
-public class DateReservation implements Comparable{
+@Table(name = "reservations")
+public class Reservation implements Comparable{
 
     @Id
     @GeneratedValue
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "date", nullable = false)
+    @Column(name = "date")
     private Date date;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @LazyCollection(LazyCollectionOption.FALSE)
     @JoinTable(
             name = "room_to_reservation",
-            joinColumns = {@JoinColumn(name = "fk_date_reservation", referencedColumnName = "id")},
+            joinColumns = {@JoinColumn(name = "fk_reservation", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "fk_room", referencedColumnName = "id")})
     private List<HotelRoom> room;
 
@@ -58,9 +58,9 @@ public class DateReservation implements Comparable{
 
     @Override
     public int compareTo(Object o) {
-        DateReservation otherDateReservation = (DateReservation) o;
+        Reservation otherReservation = (Reservation) o;
         Date thisDate = setHourMinuteSecondMillisecondInZero(date);
-        Date otherDate = setHourMinuteSecondMillisecondInZero(otherDateReservation.date);
+        Date otherDate = setHourMinuteSecondMillisecondInZero(otherReservation.date);
         return thisDate.compareTo(otherDate);
     }
 

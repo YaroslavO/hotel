@@ -8,7 +8,7 @@ import java.util.Date;
  */
 public class HotelHelper {
 
-    public static Date getDateWithHourMinuteSecondsMilisecondInZero(Calendar calendar) {
+    public static Date getDateWithHourMinuteSecondsMillisecondInZero(Calendar calendar) {
         Calendar newDate = Calendar.getInstance();
         newDate.setTime(calendar.getTime());
         newDate.set(Calendar.HOUR, 0);
