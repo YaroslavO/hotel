@@ -1,6 +1,5 @@
 package com.yaroslav.hotel.service;
 
-import com.yaroslav.hotel.AbstractDataBaseTest;
 import com.yaroslav.hotel.dao.HotelRoomDao;
 import com.yaroslav.hotel.entity.ClassHotelRoom;
 import com.yaroslav.hotel.entity.DateReservation;
@@ -30,7 +29,7 @@ import static org.mockito.Mockito.when;
  * Created by PC on 05.06.2015.
  */
 
-public class HotelRoomServiceTest extends AbstractDataBaseTest {
+public class HotelRoomServiceTest {
 
     private HotelRoomDao hotelRoomDao;
     private HotelRoomService hotelRoomService;
@@ -155,5 +154,11 @@ public class HotelRoomServiceTest extends AbstractDataBaseTest {
         } catch (Exception e) {
             Assert.assertThat(e, instanceOf(ReservationHotelRoomException.class));
         }
+    }
+
+    @Test
+    public void searchHotelRoomOnSomePeriod() throws Exception {
+
+
     }
 }

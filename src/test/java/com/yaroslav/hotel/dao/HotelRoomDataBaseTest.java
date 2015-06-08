@@ -1,13 +1,11 @@
 package com.yaroslav.hotel.dao;
 
-import com.yaroslav.hotel.AbstractDataBaseTest;
 import com.yaroslav.hotel.entity.ClassHotelRoom;
 import com.yaroslav.hotel.entity.DateReservation;
 import com.yaroslav.hotel.entity.HotelRoom;
 import com.yaroslav.hotel.entity.TypeHotelRoom;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.Rollback;
 
 import java.util.ArrayList;
 import java.util.Calendar;

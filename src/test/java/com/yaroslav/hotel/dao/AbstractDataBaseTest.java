@@ -1,4 +1,4 @@
-package com.yaroslav.hotel;
+package com.yaroslav.hotel.dao;
 
 import com.yaroslav.hotel.config.AppConfig;
 import org.junit.runner.RunWith;
