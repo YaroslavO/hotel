@@ -1,6 +1,7 @@
 package com.yaroslav.hotel.service;
 
 import com.yaroslav.hotel.dao.HotelRoomDao;
+import com.yaroslav.hotel.dao.ReservationDao;
 import com.yaroslav.hotel.entity.Period;
 import com.yaroslav.hotel.entity.Reservation;
 import com.yaroslav.hotel.entity.HotelRoom;
@@ -21,6 +22,9 @@ import java.util.List;
 @Service
 @Transactional
 public class HotelRoomServiceImpl implements HotelRoomService {
+
+    @Autowired
+    private ReservationDao reservationDao;
 
     private HotelRoomDao hotelRoom;
 
@@ -53,7 +57,6 @@ public class HotelRoomServiceImpl implements HotelRoomService {
     public void reservation(HotelRoom room, Date date) throws ReservationHotelRoomException {
         Period period = new Period(date);
         Reservation reservation = new Reservation(period);
-
         List<Reservation> reservations = new ArrayList<>();
         reservations.add(reservation);
 
@@ -64,11 +67,15 @@ public class HotelRoomServiceImpl implements HotelRoomService {
                 throw new ReservationHotelRoomException();
             }
 
+            reservation.setHotelRoom(room);
+            reservationDao.save(reservation);
             oldReservation.addAll(reservations);
             room.setReservation(oldReservation);
             hotelRoom.updateHotelRoom(room);
             return;
         } else {
+            reservation.setHotelRoom(room);
+            reservationDao.save(reservation);
             room.setReservation(reservations);
         }
 

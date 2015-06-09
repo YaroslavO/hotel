@@ -72,8 +72,12 @@ public class Hotel {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.DAY_OF_YEAR, 5);
         Date date = calendar.getTime();
+        calendar.set(Calendar.DAY_OF_YEAR, 4);
+        Date startDate = calendar.getTime();
+        calendar.set(Calendar.DAY_OF_YEAR, 6);
+        Date endDate = calendar.getTime();
 
-        Period period = new Period(date);
+        Period period = new Period(startDate, endDate);
 
         try {
             hotelRoomService.reservation(hotelRoom, date);
@@ -83,11 +87,11 @@ public class Hotel {
 
         Parameter parameter = new Parameter();
         parameter.period = period;
-        parameter.countHotelRoom = 50;
-        parameter.setNotThisBudgetRoomType(BudgetRoomType.ECONOM);
-        parameter.sizeRoomType = SizeRoomType.DBL;
-
-        return hotelRoomService.searchHotelRoomByParameter(parameter)
+        parameter.countHotelRoom = 10;
+//        parameter.setNotThisBudgetRoomType(BudgetRoomType.ECONOM);
+//        parameter.sizeRoomType = SizeRoomType.DBL;
+        List<HotelRoom> rooms = hotelRoomService.searchHotelRoomByParameter(parameter);
+        return rooms
                 .stream()
                 .map(p -> p.toString())
                 .collect(Collectors.joining("\n"));

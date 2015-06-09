@@ -1,9 +1,7 @@
 package com.yaroslav.hotel.dao;
 
-import com.yaroslav.hotel.entity.BudgetRoomType;
 import com.yaroslav.hotel.entity.HotelRoom;
 import com.yaroslav.hotel.entity.Parameter;
-import com.yaroslav.hotel.entity.SizeRoomType;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,8 +71,10 @@ public class HotelRoomDaoImpl implements HotelRoomDao {
             query += "HR.type = :sizeRoom and ";
         }
 
-        query += "(HR.reservation.size = 0 or not exists (from Reservation R where R.hotelRoom = HR and R.startDate between :startDate and " +
-                ":endDate and R.endDate between :startDate and :endDate))";
+        query += "(HR.reservation.size = 0 or not exists " +
+                "(from Reservation R where R.hotelRoom = HR and " +
+                "(R.startDate between :startDate and :endDate or " +
+                "R.endDate between :startDate and :endDate)))";
 
         Query allQuery = sessionFactory.getCurrentSession()
                 .createQuery(query);
