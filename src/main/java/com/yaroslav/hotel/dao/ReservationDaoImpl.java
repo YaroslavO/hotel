@@ -28,16 +28,15 @@ public class ReservationDaoImpl implements ReservationDao {
 
     @Override
     public boolean canBeReserved(HotelRoom room, Period period) {
-        String query = "select R from Reservation R";
-//        where R.hotelRoom = :room and " +
-//                ":startDate between R.startDate and R.endDate " +
-//                "and :endDate between R.startDate and R.endDate";
+        String query = "select R from Reservation R where R.hotelRoom = :room and " +
+                ":startDate between R.startDate and R.endDate " +
+                "and :endDate between R.startDate and R.endDate";
 
         Query hibernateQuery = sessionFactory.getCurrentSession()
                 .createQuery(query);
-//        hibernateQuery.setParameter("startDate", new Date(period.begin.getTime()));
-//        hibernateQuery.setParameter("endDate", new Date(period.end.getTime()));
-//        hibernateQuery.setParameter("room", room);
+        hibernateQuery.setParameter("startDate", new Date(period.begin.getTime()));
+        hibernateQuery.setParameter("endDate", new Date(period.end.getTime()));
+        hibernateQuery.setParameter("room", room);
 
         return hibernateQuery.list().size() == 0;
     }

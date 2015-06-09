@@ -80,4 +80,21 @@ public class ReservationDaoTest extends AbstractDataBaseTest {
         dateEnd.set(2015, Calendar.JUNE, 12);
         return new Period(dateStart.getTime(), dateEnd.getTime());
     }
+
+    @Test
+    public void canReserve__roomReservedForTheSomeCountPeriod() throws Exception {
+        HotelRoom room = new HotelRoom(SizeRoomType.DBL, BudgetRoomType.ECONOM);
+        hotelRoomDao.saveHotelRoom(room);
+
+        reservationDao.save(new Reservation(room, getPeriod()));
+
+        Calendar dateStart = Calendar.getInstance();
+        Calendar dateEnd = Calendar.getInstance();
+        dateStart.set(2015, Calendar.JUNE, 14);
+        dateEnd.set(2015, Calendar.JUNE, 15);
+
+        boolean canBeReserved = reservationDao.canBeReserved(room, new Period(dateStart.getTime(), dateEnd.getTime()));
+
+        assertThat(canBeReserved, is(true));
+    }
 }
