@@ -4,6 +4,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -70,19 +71,30 @@ public class Reservation implements Comparable {
     @Override
     public int compareTo(Object o) {
         Reservation otherReservation = (Reservation) o;
+        Date firstStartDate = setHourMinuteSecondMillisecondInZero(startDate);
+        Date secondStartDate = setHourMinuteSecondMillisecondInZero(otherReservation.startDate);
+        Date firstEndDate = setHourMinuteSecondMillisecondInZero(endDate);
+        Date secondEndDate = setHourMinuteSecondMillisecondInZero(otherReservation.endDate);
 
-        if (startDate.compareTo(otherReservation.startDate) > 0) {
-            return 1;
-        } else if(startDate.compareTo(otherReservation.startDate) < 0) {
-            return -1;
+        if (firstStartDate.compareTo(secondStartDate) != 0) {
+            return firstStartDate.compareTo(secondStartDate);
         }
 
-        if (endDate.compareTo(otherReservation.endDate) > 0) {
-            return 1;
-        } else if(endDate.compareTo(otherReservation.endDate) > 0) {
-            return -1;
+        if (firstEndDate.compareTo(secondEndDate) != 0) {
+            return firstEndDate.compareTo(secondEndDate);
         }
 
         return 0;
+    }
+
+    private Date setHourMinuteSecondMillisecondInZero(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        Date newDate = calendar.getTime();
+        return newDate;
     }
 }

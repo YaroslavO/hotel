@@ -58,6 +58,7 @@ public class HotelRoomServiceImpl implements HotelRoomService {
             if (oldReservation.containsAll(reservations)) {
                 throw new ReservationHotelRoomException();
             }
+
             oldReservation.addAll(reservations);
             room.setReservation(oldReservation);
             hotelRoom.updateHotelRoom(room);
