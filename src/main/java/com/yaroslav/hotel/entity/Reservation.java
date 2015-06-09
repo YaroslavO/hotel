@@ -31,9 +31,17 @@ public class Reservation implements Comparable {
     @JoinColumn(name = "fk_room")
     private HotelRoom hotelRoom;
 
+    public Reservation() {
+    }
+
     public Reservation(Period period) {
         this.startDate = period.begin;
         this.endDate = period.end;
+    }
+
+    public Reservation(HotelRoom room, Period period) {
+        this(period);
+        this.hotelRoom = room;
     }
 
     public Integer getId() {
