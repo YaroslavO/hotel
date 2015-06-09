@@ -1,22 +1,37 @@
 package com.yaroslav.hotel;
 
-import com.yaroslav.hotel.entity.BudgetRoomType;
-import com.yaroslav.hotel.entity.HotelRoom;
-import com.yaroslav.hotel.entity.SizeRoomType;
+import com.yaroslav.hotel.entity.*;
+import com.yaroslav.hotel.exception.ReservationHotelRoomException;
 import com.yaroslav.hotel.service.HotelRoomService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 /**
  * Created by employee on 6/8/15.
  */
 public class Hotel {
 
-    public static final int COUNT_ROOM = 50;
+    public static final int COUNT_ROOM = 20;
 
-    @Autowired
     private HotelRoomService hotelRoomService;
 
-    public Hotel () {
+    public Hotel() {
+
+    }
+
+    @Autowired
+    public Hotel(HotelRoomService hotelRoomService) {
+        this.hotelRoomService = hotelRoomService;
+        init();
+    }
+
+    public void init() {
         for (int numberRoom = 1; numberRoom <= COUNT_ROOM; numberRoom++) {
             HotelRoom room = new HotelRoom(SizeRoomType.SGL, BudgetRoomType.STANDARD);
             hotelRoomService.addHotelRoom(room);
@@ -44,4 +59,37 @@ public class Hotel {
         }
     }
 
+    public String getAllHotelRoom() {
+        return hotelRoomService
+                .getAllRoom()
+                .stream()
+                .map(p -> p.toString())
+                .collect(Collectors.joining("\n"));
+    }
+
+    public String someWork() {
+        HotelRoom hotelRoom = hotelRoomService.getHotelRoomById(5);
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.DAY_OF_YEAR, 5);
+        Date date = calendar.getTime();
+
+        Period period = new Period(date);
+
+        try {
+            hotelRoomService.reservation(hotelRoom, date);
+        } catch (ReservationHotelRoomException e) {
+            e.printStackTrace();
+        }
+
+        Parameter parameter = new Parameter();
+        parameter.period = period;
+        parameter.countHotelRoom = 50;
+        parameter.setNotThisBudgetRoomType(BudgetRoomType.ECONOM);
+        parameter.sizeRoomType = SizeRoomType.DBL;
+
+        return hotelRoomService.searchHotelRoomByParameter(parameter)
+                .stream()
+                .map(p -> p.toString())
+                .collect(Collectors.joining("\n"));
+    }
 }

@@ -10,6 +10,7 @@ import java.util.List;
  */
 
 public interface HotelRoomDao {
+    HotelRoom getHotelRoomById(Integer id);
     void addHotelRoom(HotelRoom hotelRoom);
     HotelRoom updateHotelRoom(HotelRoom hotelRoom);
     List<HotelRoom> getAllHotelRoom();

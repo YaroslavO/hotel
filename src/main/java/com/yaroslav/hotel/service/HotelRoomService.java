@@ -12,6 +12,7 @@ import java.util.List;
  * Created by PC on 05.06.2015.
  */
 public interface HotelRoomService {
+    HotelRoom getHotelRoomById(Integer id);
     List<HotelRoom> searchHotelRoomByParameter(Parameter parameter);
     void reservation(HotelRoom room, Date date) throws ReservationHotelRoomException;
     List<HotelRoom> getAllRoom();

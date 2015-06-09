@@ -69,4 +69,10 @@ public class HotelRoom {
     public void setReservation(List<Reservation> reservation) {
         this.reservation = reservation;
     }
+
+    @Override
+    public String toString() {
+        return  id + " | type = " + type.toString() +
+                "| class = " + classRoom.toString();
+    }
 }

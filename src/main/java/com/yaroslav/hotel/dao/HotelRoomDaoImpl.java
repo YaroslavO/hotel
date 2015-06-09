@@ -22,6 +22,13 @@ public class HotelRoomDaoImpl implements HotelRoomDao {
     private SessionFactory sessionFactory;
 
     @Override
+    public HotelRoom getHotelRoomById(Integer id) {
+        return (HotelRoom) sessionFactory
+                .getCurrentSession()
+                .get(HotelRoom.class, id);
+    }
+
+    @Override
     public void addHotelRoom(HotelRoom hotelRoom) {
         sessionFactory.getCurrentSession().save(hotelRoom);
     }

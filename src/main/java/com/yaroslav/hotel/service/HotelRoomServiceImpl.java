@@ -40,6 +40,11 @@ public class HotelRoomServiceImpl implements HotelRoomService {
     }
 
     @Override
+    public HotelRoom getHotelRoomById(Integer id) {
+        return hotelRoom.getHotelRoomById(id);
+    }
+
+    @Override
     public List<HotelRoom> searchHotelRoomByParameter(Parameter parameter) {
         return hotelRoom.searchHotelRoomByParameter(parameter);
     }
