@@ -24,7 +24,7 @@ public class ReservationDaoTest extends AbstractDataBaseTest {
 
     @Test
     public void saveReservation() throws Exception {
-        HotelRoom room = new HotelRoom( SizeRoomType.DBL, BudgetRoomType.ECONOM);
+        HotelRoom room = new HotelRoom(SizeRoomType.DBL, BudgetRoomType.ECONOM);
         hotelRoomDao.saveHotelRoom(room);
 
         Calendar date = Calendar.getInstance();
@@ -35,5 +35,23 @@ public class ReservationDaoTest extends AbstractDataBaseTest {
 
         assertThat(reservation.getId(), not(comparesEqualTo(null)));
         assertThat(reservation.getHotelRoom().getId(), is(room.getId()));
+    }
+
+    @Test
+    public void checkReservation__forRoomReservedOnTheSamePeriod() throws Exception {
+        HotelRoom room = new HotelRoom(SizeRoomType.DBL, BudgetRoomType.ECONOM);
+        hotelRoomDao.saveHotelRoom(room);
+
+        Calendar dateStart = Calendar.getInstance();
+        Calendar dateEnd = Calendar.getInstance();
+        dateStart.set(2015, Calendar.JUNE, 11);
+        dateEnd.set(2015, Calendar.JUNE, 12);
+        Reservation reservation = new Reservation(new Period(dateStart.getTime(), dateEnd.getTime()));
+        reservation.setHotelRoom(room);
+        reservationDao.save(reservation);
+
+        boolean canBeReserved = reservationDao.canBeReserved(room, new Period(dateStart.getTime(), dateEnd.getTime()));
+
+        assertThat(canBeReserved, is(false));
     }
 }

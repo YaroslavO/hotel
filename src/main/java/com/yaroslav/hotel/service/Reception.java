@@ -27,7 +27,7 @@ public class Reception {
     public Reservation reservation(HotelRoom room, Period period) throws ReservationHotelRoomException {
         Reservation reservation = new Reservation(period);
 
-        if (reservationDao.isGoodPeriodForThisRoom(room, period)) {
+        if (reservationDao.canBeReserved(room, period)) {
             reservation.setHotelRoom(room);
             reservationDao.save(reservation);
         } else {
