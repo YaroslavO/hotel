@@ -5,7 +5,6 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import static org.hamcrest.Matchers.*;
@@ -15,7 +14,7 @@ import static org.junit.Assert.*;
  * Created by employee on 6/5/15.
  */
 
-public class HotelRoomDataBaseTest extends AbstractDataBaseTest {
+public class HotelRoomDaoTest extends AbstractDataBaseTest {
 
     @Autowired
     private HotelRoomDao hotelRoom;
@@ -31,7 +30,7 @@ public class HotelRoomDataBaseTest extends AbstractDataBaseTest {
 
         assertNull(room.getId());
 
-        hotelRoom.addHotelRoom(room);
+        hotelRoom.saveHotelRoom(room);
 
         assertNotNull(room.getId());
         assertTrue(room.getId() > 0);
@@ -52,7 +51,7 @@ public class HotelRoomDataBaseTest extends AbstractDataBaseTest {
         HotelRoom room = new HotelRoom();
         room.setType(typeRoom);
         room.setClassRoom(classRoom);
-        hotelRoom.addHotelRoom(room);
+        hotelRoom.saveHotelRoom(room);
     }
 
     @Test
@@ -63,7 +62,7 @@ public class HotelRoomDataBaseTest extends AbstractDataBaseTest {
         //when
         room.setClassRoom(BudgetRoomType.ECONOM);
         room.setType(SizeRoomType.SGL);
-        hotelRoom.addHotelRoom(room);
+        hotelRoom.saveHotelRoom(room);
 
 //        than
         assertThat(room.getId(), not(comparesEqualTo(null)));
@@ -81,10 +80,10 @@ public class HotelRoomDataBaseTest extends AbstractDataBaseTest {
        parameter.period = new Period(calendar.getTime());
 
         HotelRoom room = new HotelRoom(SizeRoomType.DBL, BudgetRoomType.LUX);
-        hotelRoom.addHotelRoom(room);
+        hotelRoom.saveHotelRoom(room);
 
         room = new HotelRoom(SizeRoomType.SGL, BudgetRoomType.LUX);
-        hotelRoom.addHotelRoom(room);
+        hotelRoom.saveHotelRoom(room);
 
         Reservation reservation = new Reservation(new Period(calendar.getTime()));
         reservation.setHotelRoom(room);
@@ -108,9 +107,9 @@ public class HotelRoomDataBaseTest extends AbstractDataBaseTest {
         parameter.period = new Period(calendar.getTime());
 
         HotelRoom room = new HotelRoom(SizeRoomType.DBL, BudgetRoomType.LUX);
-        hotelRoom.addHotelRoom(room);
+        hotelRoom.saveHotelRoom(room);
         room = new HotelRoom(SizeRoomType.SGL, BudgetRoomType.LUX);
-        hotelRoom.addHotelRoom(room);
+        hotelRoom.saveHotelRoom(room);
 
         parameter.setNotThisBudgetRoomType(BudgetRoomType.LUX);
 
@@ -138,11 +137,11 @@ public class HotelRoomDataBaseTest extends AbstractDataBaseTest {
         parameter.period = new Period(calendar.getTime());
 
         HotelRoom room = new HotelRoom(SizeRoomType.DBL, BudgetRoomType.LUX);
-        hotelRoom.addHotelRoom(room);
+        hotelRoom.saveHotelRoom(room);
         room = new HotelRoom(SizeRoomType.SGL, BudgetRoomType.LUX);
-        hotelRoom.addHotelRoom(room);
+        hotelRoom.saveHotelRoom(room);
         room = new HotelRoom(SizeRoomType.SGL, BudgetRoomType.LUX);
-        hotelRoom.addHotelRoom(room);
+        hotelRoom.saveHotelRoom(room);
 
         //when
         parameter.sizeRoomType = SizeRoomType.SGL;

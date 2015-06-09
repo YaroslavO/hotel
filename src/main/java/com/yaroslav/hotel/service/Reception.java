@@ -17,22 +17,23 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class Reception {
 
-
     private ReservationDao reservationDao;
 
     @Autowired
     public Reception(ReservationDao reservationDao) {
         this.reservationDao = reservationDao;
-
     }
 
-    public void reservation(HotelRoom room, Period period) throws ReservationHotelRoomException {
+    public Reservation reservation(HotelRoom room, Period period) throws ReservationHotelRoomException {
+        Reservation reservation = new Reservation(period);
+
         if (reservationDao.isGoodPeriodForThisRoom(room, period)) {
-            Reservation reservation = new Reservation(period);
             reservation.setHotelRoom(room);
             reservationDao.save(reservation);
         } else {
             throw new ReservationHotelRoomException();
         }
+
+        return reservation;
     }
 }

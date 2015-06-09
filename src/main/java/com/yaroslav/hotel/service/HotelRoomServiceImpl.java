@@ -1,18 +1,12 @@
 package com.yaroslav.hotel.service;
 
 import com.yaroslav.hotel.dao.HotelRoomDao;
-import com.yaroslav.hotel.dao.ReservationDao;
-import com.yaroslav.hotel.entity.Period;
-import com.yaroslav.hotel.entity.Reservation;
 import com.yaroslav.hotel.entity.HotelRoom;
 import com.yaroslav.hotel.entity.Parameter;
-import com.yaroslav.hotel.exception.ReservationHotelRoomException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -37,7 +31,7 @@ public class HotelRoomServiceImpl implements HotelRoomService {
 
     @Override
     public void addHotelRoom(HotelRoom room) {
-        hotelRoom.addHotelRoom(room);
+        hotelRoom.saveHotelRoom(room);
     }
 
     @Override
