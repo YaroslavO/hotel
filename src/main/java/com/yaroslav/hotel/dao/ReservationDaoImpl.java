@@ -16,7 +16,8 @@ public class ReservationDaoImpl implements ReservationDao {
     private SessionFactory sessionFactory;
 
     @Override
-    public void save(Reservation Reservation) {
-        sessionFactory.getCurrentSession().save(Reservation);
+    public Reservation save(Reservation reservation) {
+        sessionFactory.getCurrentSession().save(reservation);
+        return reservation;
     }
 }

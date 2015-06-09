@@ -97,4 +97,15 @@ public class Reservation implements Comparable {
         Date newDate = calendar.getTime();
         return newDate;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        Reservation otherReservation = (Reservation) obj;
+        Date firstStartDate = setHourMinuteSecondMillisecondInZero(startDate);
+        Date secondStartDate = setHourMinuteSecondMillisecondInZero(otherReservation.startDate);
+        Date firstEndDate = setHourMinuteSecondMillisecondInZero(endDate);
+        Date secondEndDate = setHourMinuteSecondMillisecondInZero(otherReservation.endDate);
+
+        return firstStartDate.equals(secondStartDate) && firstEndDate.equals(secondEndDate);
+    }
 }

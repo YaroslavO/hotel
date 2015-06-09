@@ -2,6 +2,7 @@ package com.yaroslav.hotel.service;
 
 import com.yaroslav.hotel.dao.AbstractDataBaseTest;
 import com.yaroslav.hotel.dao.HotelRoomDao;
+import com.yaroslav.hotel.dao.ReservationDao;
 import com.yaroslav.hotel.entity.*;
 import com.yaroslav.hotel.exception.ReservationHotelRoomException;
 import com.yaroslav.hotel.util.HotelHelper;
@@ -30,13 +31,15 @@ import static org.mockito.Mockito.when;
 public class HotelRoomServiceTest extends AbstractDataBaseTest {
 
     private HotelRoomDao hotelRoomDao;
+    private ReservationDao reservationDao;
     private HotelRoomService hotelRoomService;
     private Calendar dayInCalendar;
 
     @Before
     public void setUp() throws Exception {
         hotelRoomDao = mock(HotelRoomDao.class);
-        hotelRoomService = new HotelRoomServiceImpl(hotelRoomDao);
+        reservationDao = mock(ReservationDao.class);
+        hotelRoomService = new HotelRoomServiceImpl(hotelRoomDao, reservationDao);
         dayInCalendar = Calendar.getInstance();
         dayInCalendar.set(Calendar.YEAR, 2015);
 
@@ -46,6 +49,15 @@ public class HotelRoomServiceTest extends AbstractDataBaseTest {
             public HotelRoom answer(InvocationOnMock invocationOnMock) throws Throwable {
                 HotelRoom hotelRoom = (HotelRoom) invocationOnMock.getArguments()[0];
                 return hotelRoom;
+            }
+        });
+
+        when(reservationDao.save(any(Reservation.class))).thenAnswer(new Answer<Reservation>() {
+
+            @Override
+            public Reservation answer(InvocationOnMock invocationOnMock) throws Throwable {
+                Reservation reservation = (Reservation) invocationOnMock.getArguments()[0];
+                return reservation;
             }
         });
     }

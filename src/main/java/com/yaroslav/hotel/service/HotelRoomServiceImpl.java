@@ -23,14 +23,14 @@ import java.util.List;
 @Transactional
 public class HotelRoomServiceImpl implements HotelRoomService {
 
-    @Autowired
     private ReservationDao reservationDao;
 
     private HotelRoomDao hotelRoom;
 
     @Autowired
-    public HotelRoomServiceImpl(HotelRoomDao hotelRoom) {
+    public HotelRoomServiceImpl(HotelRoomDao hotelRoom, ReservationDao reservationDao) {
         this.hotelRoom = hotelRoom;
+        this.reservationDao = reservationDao;
     }
 
     @Override
