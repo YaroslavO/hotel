@@ -3,6 +3,7 @@ package com.yaroslav.hotel;
 import com.yaroslav.hotel.entity.*;
 import com.yaroslav.hotel.exception.ReservationHotelRoomException;
 import com.yaroslav.hotel.service.HotelRoomService;
+import com.yaroslav.hotel.service.Reception;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,14 +21,16 @@ public class Hotel {
     public static final int COUNT_ROOM = 20;
 
     private HotelRoomService hotelRoomService;
+    private Reception reception;
 
     public Hotel() {
 
     }
 
     @Autowired
-    public Hotel(HotelRoomService hotelRoomService) {
+    public Hotel(HotelRoomService hotelRoomService, Reception reception) {
         this.hotelRoomService = hotelRoomService;
+        this.reception = reception;
         init();
     }
 
@@ -80,7 +83,7 @@ public class Hotel {
         Period period = new Period(startDate, endDate);
 
         try {
-            hotelRoomService.reservation(hotelRoom, date);
+            reception.reservation(hotelRoom, new Period(date));
         } catch (ReservationHotelRoomException e) {
             e.printStackTrace();
         }

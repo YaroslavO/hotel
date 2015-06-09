@@ -1,7 +1,9 @@
 package com.yaroslav.hotel.config;
 
 import com.yaroslav.hotel.Hotel;
+import com.yaroslav.hotel.entity.Reservation;
 import com.yaroslav.hotel.service.HotelRoomService;
+import com.yaroslav.hotel.service.Reception;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -19,7 +21,7 @@ public class AppConfig {
 
 //    @Bean(name = "hotel")
 //    @Autowired
-//    public Hotel getHotel(HotelRoomService hotelRoomService) {
-//        return new Hotel(hotelRoomService);
+//    public Hotel getHotel(HotelRoomService hotelRoomService, Reception reception) {
+//        return new Hotel(hotelRoomService, reception);
 //    }
 }

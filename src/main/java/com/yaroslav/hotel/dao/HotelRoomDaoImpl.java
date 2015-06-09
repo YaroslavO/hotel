@@ -71,7 +71,7 @@ public class HotelRoomDaoImpl implements HotelRoomDao {
             query += "HR.type = :sizeRoom and ";
         }
 
-        query += "(HR.reservation.size = 0 or not exists " +
+        query += "( not exists " +
                 "(from Reservation R where R.hotelRoom = HR and " +
                 "(R.startDate between :startDate and :endDate or " +
                 "R.endDate between :startDate and :endDate)))";

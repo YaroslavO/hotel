@@ -1,5 +1,7 @@
 package com.yaroslav.hotel.dao;
 
+import com.yaroslav.hotel.entity.HotelRoom;
+import com.yaroslav.hotel.entity.Period;
 import com.yaroslav.hotel.entity.Reservation;
 
 /**
@@ -7,4 +9,5 @@ import com.yaroslav.hotel.entity.Reservation;
  */
 public interface ReservationDao {
     Reservation save(Reservation reservation);
+    boolean isGoodPeriodForThisRoom(HotelRoom room, Period period);
 }

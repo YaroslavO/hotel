@@ -14,8 +14,6 @@ import java.util.List;
 public interface HotelRoomService {
     HotelRoom getHotelRoomById(Integer id);
     List<HotelRoom> searchHotelRoomByParameter(Parameter parameter);
-    void reservation(HotelRoom room, Date date) throws ReservationHotelRoomException;
     List<HotelRoom> getAllRoom();
     void addHotelRoom(HotelRoom room);
-    void reservation(HotelRoom room, Period period) throws ReservationHotelRoomException;
 }

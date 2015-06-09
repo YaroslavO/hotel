@@ -1,11 +1,9 @@
 package com.yaroslav.hotel.dao;
 
 import com.yaroslav.hotel.entity.*;
-import com.yaroslav.hotel.util.HotelHelper;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -58,50 +56,6 @@ public class HotelRoomDataBaseTest extends AbstractDataBaseTest {
     }
 
     @Test
-    public void reservationRoomOnOneDay() throws Exception {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(2015, Calendar.JUNE, 9);
-        Date dateReservation = calendar.getTime();
-
-        HotelRoom room = new HotelRoom();
-        room.setClassRoom(BudgetRoomType.STANDARD);
-        room.setType(SizeRoomType.SGL);
-        hotelRoom.addHotelRoom(room);
-
-        Period period = new Period(dateReservation);
-        Reservation ReservationRoom = new Reservation(period);
-        List<Reservation> ReservationPeriod = new ArrayList<>();
-        ReservationPeriod.add(ReservationRoom);
-        room.setReservation(ReservationPeriod);
-
-        assertThat(room.getReservation().size(), is(1));
-        assertThat(room.getReservation().get(0).getId(), not(comparesEqualTo(null)));
-    }
-
-    @Test
-    public void reservationRoomOnCustomCountDay() throws Exception {
-        HotelRoom room = new HotelRoom();
-        room.setClassRoom(BudgetRoomType.STANDARD);
-        room.setType(SizeRoomType.SGL);
-        hotelRoom.addHotelRoom(room);
-
-        Calendar beginDay = Calendar.getInstance();
-        Calendar endDay = Calendar.getInstance();
-        beginDay.set(2015, Calendar.JUNE, 1);
-        endDay.setTime(beginDay.getTime());
-        endDay.set(Calendar.DAY_OF_MONTH, 5);
-        Period period = new Period(beginDay.getTime(), endDay.getTime());
-        List<Reservation> reservationPeriod = new ArrayList<>();
-        Reservation reservation = new Reservation(period);
-        reservationPeriod.add(reservation);
-        room.setReservation(reservationPeriod);
-
-        assertThat(room.getReservation().get(0).getId(), not(comparesEqualTo(null)));
-        assertThat(room.getReservation().size(), is(1));
-    //    assertThat(room.getReservation().get(0), is(reservation));
-    }
-
-    @Test
     public void deleteRoomHotelById() throws Exception {
         //given
         HotelRoom room = new HotelRoom();
@@ -123,27 +77,22 @@ public class HotelRoomDataBaseTest extends AbstractDataBaseTest {
     public void searchHotelRoomByDate() throws Exception {
         Calendar calendar = Calendar.getInstance();
         calendar.set(2015, Calendar.JUNE, 13);
-        Parameter dateParameter = new Parameter();
-        Date date = HotelHelper.getDateWithHourMinuteSecondsMillisecondInZero(calendar);
-        dateParameter.period = new Period(date);
+        Parameter parameter = new Parameter();
+       parameter.period = new Period(calendar.getTime());
 
         HotelRoom room = new HotelRoom(SizeRoomType.DBL, BudgetRoomType.LUX);
         hotelRoom.addHotelRoom(room);
 
-        List<Reservation> reservationPeriod = new ArrayList<>();
-        Period period = new Period(date);
-        Reservation reservation = new Reservation(period);
-
-        reservationDao.save(reservation);
-
         room = new HotelRoom(SizeRoomType.SGL, BudgetRoomType.LUX);
-        reservationPeriod.add(reservation);
-        room.setReservation(reservationPeriod);
         hotelRoom.addHotelRoom(room);
+
+        Reservation reservation = new Reservation(new Period(calendar.getTime()));
+        reservation.setHotelRoom(room);
+        reservationDao.save(reservation);
 
         reservation.setHotelRoom(room);
 
-        List<HotelRoom> rooms = hotelRoom.searchHotelRoomByParameter(dateParameter);
+        List<HotelRoom> rooms = hotelRoom.searchHotelRoomByParameter(parameter);
 
         assertNotNull(rooms);
         assertNotNull(rooms.get(0));
@@ -156,8 +105,7 @@ public class HotelRoomDataBaseTest extends AbstractDataBaseTest {
         Calendar calendar = Calendar.getInstance();
         calendar.set(2015, Calendar.JUNE, 13);
         Parameter parameter = new Parameter();
-        Date date = HotelHelper.getDateWithHourMinuteSecondsMillisecondInZero(calendar);
-        parameter.period = new Period(date);
+        parameter.period = new Period(calendar.getTime());
 
         HotelRoom room = new HotelRoom(SizeRoomType.DBL, BudgetRoomType.LUX);
         hotelRoom.addHotelRoom(room);
@@ -187,8 +135,7 @@ public class HotelRoomDataBaseTest extends AbstractDataBaseTest {
         Calendar calendar = Calendar.getInstance();
         calendar.set(2015, Calendar.JUNE, 13);
         Parameter parameter = new Parameter();
-        Date date = HotelHelper.getDateWithHourMinuteSecondsMillisecondInZero(calendar);
-        parameter.period = new Period(date);
+        parameter.period = new Period(calendar.getTime());
 
         HotelRoom room = new HotelRoom(SizeRoomType.DBL, BudgetRoomType.LUX);
         hotelRoom.addHotelRoom(room);
