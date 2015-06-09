@@ -19,9 +19,9 @@ import org.springframework.context.annotation.Import;
 @Import(DatabaseConfig.class)
 public class AppConfig {
 
-//    @Bean(name = "hotel")
-//    @Autowired
-//    public Hotel getHotel(HotelRoomService hotelRoomService, Reception reception) {
-//        return new Hotel(hotelRoomService, reception);
-//    }
+    @Bean(name = "hotel")
+    @Autowired
+    public Hotel getHotel(HotelRoomService hotelRoomService, Reception reception) {
+        return new Hotel(hotelRoomService, reception);
+    }
 }

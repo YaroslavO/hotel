@@ -3,9 +3,12 @@ package com.yaroslav.hotel.dao;
 import com.yaroslav.hotel.entity.HotelRoom;
 import com.yaroslav.hotel.entity.Period;
 import com.yaroslav.hotel.entity.Reservation;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import java.sql.Date;
 
 /**
  * Created by employee on 6/8/15.
@@ -25,6 +28,15 @@ public class ReservationDaoImpl implements ReservationDao {
 
     @Override
     public boolean isGoodPeriodForThisRoom(HotelRoom room, Period period) {
-        return false;
+        String query = "select R from Reservation R where R.hotelRoom = :hotel and not (:startDate between R.startDate and R.endDate) " +
+                "and not (:endDate between R.startDate and R.endDate)";
+
+        Query hibernateQuery = sessionFactory.getCurrentSession()
+                .createQuery(query);
+        hibernateQuery.setParameter("startDate", new Date(period.begin.getTime()));
+        hibernateQuery.setParameter("endDate", new Date(period.end.getTime()));
+        hibernateQuery.setParameter("hotel", room);
+
+        return hibernateQuery.list().size() == 0;
     }
 }
