@@ -63,7 +63,13 @@ public class HotelRoomServiceTest extends AbstractDataBaseTest {
 
         //than
         assertThat(hotelRoom.getReservation(), not(comparesEqualTo(null)));
-       // assertThat(hotelRoom.getReservation().get(0).getDate(), is(dateReservation));
+
+        Calendar beginDate = Calendar.getInstance();
+        beginDate.setTime(hotelRoom.getReservation().get(0).getStartDate());
+        Calendar endDate = Calendar.getInstance();
+        endDate.setTime(hotelRoom.getReservation().get(0).getEndDate());
+        assertThat(beginDate.get(Calendar.DAY_OF_YEAR), is(dayInCalendar.get(Calendar.DAY_OF_YEAR)));
+        assertThat(endDate.get(Calendar.DAY_OF_YEAR), is(dayInCalendar.get(Calendar.DAY_OF_YEAR)));
     }
 
     @Test

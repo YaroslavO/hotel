@@ -13,10 +13,10 @@ public class Period {
     public Period(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
-        calendar.set(Calendar.HOUR, 0);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
         this.begin.setTime(calendar.getTime().getTime());
 
-        calendar.set(Calendar.HOUR, 23);
+        calendar.set(Calendar.HOUR_OF_DAY, 23);
         calendar.set(Calendar.MINUTE, 59);
         this.end.setTime(calendar.getTime().getTime());
     }

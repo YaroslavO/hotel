@@ -1,7 +1,9 @@
 package com.yaroslav.hotel.dao;
 
+import com.yaroslav.hotel.entity.BudgetRoomType;
 import com.yaroslav.hotel.entity.HotelRoom;
 import com.yaroslav.hotel.entity.Parameter;
+import com.yaroslav.hotel.entity.SizeRoomType;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,19 +51,39 @@ public class HotelRoomDaoImpl implements HotelRoomDao {
     @SuppressWarnings("unchecked")
     @Override
     public List<HotelRoom> searchHotelRoomByParameter(Parameter parameter) {
-        // make with criteria
-        String query = "select HR from HotelRoom HR, Reservation R where HR.id = R.hotelRoom and " +
-                " not exists (from Reservation R2 where R2.id = R.id and R2.startDate < :startDate and " +
-                "R2.endDate > :endDate )";
+
+        String query = "select HR from HotelRoom HR where ";
+
+        if (parameter.budgetRoomType != null) {
+            if (parameter.thisBudgetRoomType) {
+                query += "HR.classRoom = :classRoom  and ";
+            } else {
+                query += "HR.classRoom <> :classRoom  and ";
+            }
+        }
+
+        if (parameter.sizeRoomType != null) {
+            query += "HR.type = :sizeRoom and ";
+        }
+
+        query += "(HR.reservation.size = 0 or not exists (from Reservation R where R.hotelRoom = HR and R.startDate between :startDate and " +
+                ":endDate and R.endDate between :startDate and :endDate))";
 
         Query allQuery = sessionFactory.getCurrentSession()
                 .createQuery(query);
 
         Date endDate = new Date(parameter.period.end.getTime());
         Date beginDate = new Date(parameter.period.begin.getTime());
-
         allQuery.setParameter("startDate", beginDate);
         allQuery.setParameter("endDate", endDate);
+
+        if (parameter.budgetRoomType != null) {
+            allQuery.setParameter("classRoom", parameter.budgetRoomType);
+        }
+
+        if (parameter.sizeRoomType != null) {
+            allQuery.setParameter("sizeRoom", parameter.sizeRoomType);
+        }
 
         if (parameter.countHotelRoom == null) {
             allQuery.setMaxResults(20);

@@ -149,4 +149,68 @@ public class HotelRoomDataBaseTest extends AbstractDataBaseTest {
         assertNotNull(rooms.get(0));
         assertTrue(rooms.size() == 1);
     }
+
+    @Test
+    public void searchHotelRoomByType() throws Exception {
+        //given
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(2015, Calendar.JUNE, 13);
+        Parameter parameter = new Parameter();
+        Date date = HotelHelper.getDateWithHourMinuteSecondsMillisecondInZero(calendar);
+        parameter.period = new Period(date);
+
+        HotelRoom room = new HotelRoom(SizeRoomType.DBL, BudgetRoomType.LUX);
+        hotelRoom.addHotelRoom(room);
+        room = new HotelRoom(SizeRoomType.SGL, BudgetRoomType.LUX);
+        hotelRoom.addHotelRoom(room);
+
+        parameter.setNotThisBudgetRoomType(BudgetRoomType.LUX);
+
+        //when
+        List<HotelRoom> rooms = hotelRoom.searchHotelRoomByParameter(parameter);
+
+        //than
+        assertNotNull(rooms);
+        assertTrue(rooms.size() == 0);
+
+        //when
+        parameter.thisBudgetRoomType = true;
+        rooms = hotelRoom.searchHotelRoomByParameter(parameter);
+
+        //than
+        assertTrue(rooms.size() == 2);
+    }
+
+    @Test
+    public void searchHotelRoomBySize() throws Exception {
+        //given
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(2015, Calendar.JUNE, 13);
+        Parameter parameter = new Parameter();
+        Date date = HotelHelper.getDateWithHourMinuteSecondsMillisecondInZero(calendar);
+        parameter.period = new Period(date);
+
+        HotelRoom room = new HotelRoom(SizeRoomType.DBL, BudgetRoomType.LUX);
+        hotelRoom.addHotelRoom(room);
+        room = new HotelRoom(SizeRoomType.SGL, BudgetRoomType.LUX);
+        hotelRoom.addHotelRoom(room);
+        room = new HotelRoom(SizeRoomType.SGL, BudgetRoomType.LUX);
+        hotelRoom.addHotelRoom(room);
+
+        //when
+        parameter.sizeRoomType = SizeRoomType.SGL;
+        List<HotelRoom> rooms = hotelRoom.searchHotelRoomByParameter(parameter);
+
+        //than
+        assertThat(rooms.size(), is(2));
+        assertThat(rooms.get(0).getType(), is(SizeRoomType.SGL));
+
+        //when
+        parameter.sizeRoomType = SizeRoomType.DBL;
+        rooms = hotelRoom.searchHotelRoomByParameter(parameter);
+
+        //than
+        assertThat(rooms.size(), is(1));
+        assertThat(rooms.get(0).getType(), is(SizeRoomType.DBL));
+    }
 }
