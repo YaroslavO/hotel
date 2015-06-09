@@ -12,7 +12,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "reservations")
-public class Reservation {
+public class Reservation implements Comparable {
 
     @Id
     @GeneratedValue
@@ -65,5 +65,24 @@ public class Reservation {
 
     public void setHotelRoom(HotelRoom hotelRoom) {
         this.hotelRoom = hotelRoom;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Reservation otherReservation = (Reservation) o;
+
+        if (startDate.compareTo(otherReservation.startDate) > 0) {
+            return 1;
+        } else if(startDate.compareTo(otherReservation.startDate) < 0) {
+            return -1;
+        }
+
+        if (endDate.compareTo(otherReservation.endDate) > 0) {
+            return 1;
+        } else if(endDate.compareTo(otherReservation.endDate) > 0) {
+            return -1;
+        }
+
+        return 0;
     }
 }

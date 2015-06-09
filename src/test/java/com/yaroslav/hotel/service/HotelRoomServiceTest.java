@@ -16,7 +16,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import static junit.framework.TestCase.assertNotNull;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertTrue;
@@ -64,38 +63,30 @@ public class HotelRoomServiceTest extends AbstractDataBaseTest {
         //than
         assertThat(hotelRoom.getReservation(), not(comparesEqualTo(null)));
 
-        Calendar beginDate = Calendar.getInstance();
-        beginDate.setTime(hotelRoom.getReservation().get(0).getStartDate());
+        Calendar startDate = Calendar.getInstance();
+        startDate.setTime(hotelRoom.getReservation().get(0).getStartDate());
         Calendar endDate = Calendar.getInstance();
         endDate.setTime(hotelRoom.getReservation().get(0).getEndDate());
-        assertThat(beginDate.get(Calendar.DAY_OF_YEAR), is(dayInCalendar.get(Calendar.DAY_OF_YEAR)));
+        assertThat(startDate.get(Calendar.DAY_OF_YEAR), is(dayInCalendar.get(Calendar.DAY_OF_YEAR)));
         assertThat(endDate.get(Calendar.DAY_OF_YEAR), is(dayInCalendar.get(Calendar.DAY_OF_YEAR)));
     }
 
     @Test
     public void reservationHotelRoomOnSomeCountDay() throws Exception {
         //given
-        List<Date> period = new ArrayList<>();
-
-        for (int numberDay = 1; numberDay <= 20; numberDay++) {
-            dayInCalendar.set(Calendar.DAY_OF_YEAR, numberDay);
-            Date date = HotelHelper.getDateWithHourMinuteSecondsMillisecondInZero(dayInCalendar);
-            period.add(date);
-        }
+        Period period = makePeriod(1, 6);
 
         HotelRoom hotelRoom = new HotelRoom(SizeRoomType.SGL, BudgetRoomType.ECONOM);
         hotelRoom.setId(1);
 
         //when
-      //  hotelRoomService.reservation(hotelRoom, period);
+        hotelRoomService.reservation(hotelRoom, period);
 
         //than
         assertThat(hotelRoom.getReservation(), not(comparesEqualTo(null)));
-//        assertThat(hotelRoom.getReservation().size(), is(period.size()));
-
-        for (int numberDay = 0; numberDay < period.size(); numberDay++) {
-            //assertThat(hotelRoom.getReservation().get(numberDay).getDate(), is(period.get(numberDay)));
-        }
+        assertTrue(hotelRoom.getReservation().size() == 1);
+        assertThat(hotelRoom.getReservation().get(0).getStartDate(), is(period.begin));
+        assertThat(hotelRoom.getReservation().get(0).getEndDate(), is(period.end));
     }
 
     @Test
@@ -105,39 +96,35 @@ public class HotelRoomServiceTest extends AbstractDataBaseTest {
         hotelRoom.setId(1);
         prepareHotelRoomWithExistingPeriod(hotelRoom);
 
-      //  List<OldReservation> existingPeriod = new ArrayList<>();
-     //   existingPeriod.addAll(hotelRoom.getOldReservationPeriod());
-        List<Date> periodForAdd = new ArrayList<>();
+        List<Reservation> existingPeriod = new ArrayList<>();
+        existingPeriod.addAll(hotelRoom.getReservation());
 
-        for (int numberDay = 30; numberDay <= 40; numberDay++) {
-            dayInCalendar.set(Calendar.DAY_OF_YEAR, numberDay);
-            Date date = HotelHelper.getDateWithHourMinuteSecondsMillisecondInZero(dayInCalendar);
-            periodForAdd.add(date);
-        }
+        Period period = makePeriod(7, 12);
 
         //when
-    //    hotelRoomService.reservation(hotelRoom, periodForAdd);
-     //   List<OldReservation> allPeriod = new ArrayList<>();
-     //   allPeriod.addAll(hotelRoom.getOldReservationPeriod());
+        hotelRoomService.reservation(hotelRoom, period);
+        List<Reservation> allPeriod = new ArrayList<>();
+        allPeriod.addAll(hotelRoom.getReservation());
 
         //than
-      //  assertThat(existingPeriod.size(), not(allPeriod.size()));
-      //  assertThat(existingPeriod, not(equalTo(allPeriod)));
-      //  assertTrue(allPeriod.containsAll(existingPeriod));
+        assertThat(existingPeriod.size(), not(allPeriod.size()));
+        assertThat(existingPeriod, not(equalTo(allPeriod)));
+        assertTrue(allPeriod.containsAll(existingPeriod));
+    }
+
+    private Period makePeriod(Integer begin, Integer end) {
+        dayInCalendar.set(Calendar.DAY_OF_YEAR, begin);
+        Date startDate = HotelHelper.getDateWithHourMinuteSecondsMillisecondInZero(dayInCalendar);
+        dayInCalendar.set(Calendar.DAY_OF_YEAR, end);
+        Date endDate = HotelHelper.getDateWithHourMinuteSecondsMillisecondInZero(dayInCalendar);
+        Period period = new Period(startDate, endDate);
+        return period;
     }
 
     private void prepareHotelRoomWithExistingPeriod(HotelRoom hotelRoom) throws ReservationHotelRoomException {
+        Period period = makePeriod(1, 6);
 
-        List<Date> existingPeriod = new ArrayList<>();
-
-        for (int numberDay = 1; numberDay <= 20; numberDay++) {
-            dayInCalendar.set(Calendar.DAY_OF_YEAR, numberDay);
-            Date date = HotelHelper.getDateWithHourMinuteSecondsMillisecondInZero(dayInCalendar);
-            existingPeriod.add(date);
-        }
-
-        //when
-   //     hotelRoomService.reservation(hotelRoom, existingPeriod);
+        hotelRoomService.reservation(hotelRoom, period);
     }
 
     @Test
@@ -159,10 +146,5 @@ public class HotelRoomServiceTest extends AbstractDataBaseTest {
         } catch (Exception e) {
             Assert.assertThat(e, instanceOf(ReservationHotelRoomException.class));
         }
-    }
-
-    @Test
-    public void searchHotelRoomOnSomePeriod() throws Exception {
-
     }
 }

@@ -13,11 +13,8 @@ import java.util.List;
  */
 public interface HotelRoomService {
     List<HotelRoom> searchHotelRoomByParameter(Parameter parameter);
-    void reservation(HotelRoom room, Date date) throws ReflectiveOperationException;
+    void reservation(HotelRoom room, Date date) throws ReservationHotelRoomException;
     List<HotelRoom> getAllRoom();
     void addHotelRoom(HotelRoom room);
-    List<HotelRoom> searchHotelRoomByParameter(Period period);
-
-    // TODO change this code
     void reservation(HotelRoom room, Period period) throws ReservationHotelRoomException;
 }

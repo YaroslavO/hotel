@@ -40,42 +40,42 @@ public class HotelRoomServiceImpl implements HotelRoomService {
     }
 
     @Override
-    public List<HotelRoom> searchHotelRoomByParameter(Period period) {
-        return null;
-    }
-
-    @Override
     public List<HotelRoom> searchHotelRoomByParameter(Parameter parameter) {
         return hotelRoom.searchHotelRoomByParameter(parameter);
     }
 
     @Override
-    public void reservation(HotelRoom room, Date date) throws ReflectiveOperationException {
+    public void reservation(HotelRoom room, Date date) throws ReservationHotelRoomException {
         Period period = new Period(date);
         Reservation reservation = new Reservation(period);
 
-        List<Reservation> oneDayReservation = new ArrayList<>();
-        oneDayReservation.add(reservation);
+        List<Reservation> reservations = new ArrayList<>();
+        reservations.add(reservation);
 
         if (room.getReservation() != null) {
             List<Reservation> oldReservation = new ArrayList<>();
             oldReservation.addAll(room.getReservation());
-            if (oldReservation.containsAll(oneDayReservation)) {
-                throw new ReflectiveOperationException();
+            if (oldReservation.containsAll(reservations)) {
+                throw new ReservationHotelRoomException();
             }
+            oldReservation.addAll(reservations);
+            room.setReservation(oldReservation);
+            hotelRoom.updateHotelRoom(room);
+            return;
+        } else {
+            room.setReservation(reservations);
         }
 
-        room.setReservation(oneDayReservation);
         hotelRoom.updateHotelRoom(room);
     }
 
-    // TODO change this code
     @Override
     public void reservation(HotelRoom room, Period period) throws ReservationHotelRoomException {
         List<Reservation> daysReservation = new ArrayList<>();
         List<Reservation> oldReservationPeriodBefore = new ArrayList<>();
 
         Reservation reservation = new Reservation(period);
+        daysReservation.add(reservation);
 
         if (room.getReservation() != null) {
             if (oldReservationPeriodBefore.containsAll(daysReservation)) {
