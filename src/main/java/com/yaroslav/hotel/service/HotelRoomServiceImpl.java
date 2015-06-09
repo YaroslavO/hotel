@@ -104,6 +104,4 @@ public class HotelRoomServiceImpl implements HotelRoomService {
 
         hotelRoom.updateHotelRoom(room);
     }
-
-
 }

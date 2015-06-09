@@ -15,7 +15,7 @@ public class Main {
         Hotel hotel = (Hotel) context.getBean("hotel");
 
         System.out.println(hotel.getAllHotelRoom());
-
+        System.out.println("\n");
         System.out.println(hotel.someWork());
     }
 }
