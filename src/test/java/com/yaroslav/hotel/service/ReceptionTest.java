@@ -1,6 +1,6 @@
 package com.yaroslav.hotel.service;
 
-import com.yaroslav.hotel.dao.AbstractDataBaseTest;
+import com.yaroslav.hotel.config.AbstractDataBaseTest;
 import com.yaroslav.hotel.dao.HotelRoomDao;
 import com.yaroslav.hotel.dao.ReservationDao;
 import com.yaroslav.hotel.entity.*;

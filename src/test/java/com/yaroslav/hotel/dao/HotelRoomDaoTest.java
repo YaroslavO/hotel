@@ -1,11 +1,11 @@
 package com.yaroslav.hotel.dao;
 
+import com.yaroslav.hotel.config.AbstractDataBaseTest;
 import com.yaroslav.hotel.entity.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 

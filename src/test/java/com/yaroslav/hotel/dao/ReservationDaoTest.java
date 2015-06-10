@@ -1,5 +1,6 @@
 package com.yaroslav.hotel.dao;
 
+import com.yaroslav.hotel.config.AbstractDataBaseTest;
 import com.yaroslav.hotel.entity.*;
 import org.hibernate.SessionFactory;
 import org.junit.Test;
