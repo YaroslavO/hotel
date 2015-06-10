@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -151,7 +152,9 @@ public class HotelRoomDaoTest extends AbstractDataBaseTest {
 
         //when
         hqlBuilder.setSizeRoomType(SizeRoomType.SGL);
-        List<HotelRoom> rooms = hotelRoom.searchHotelRoomByParameter(hqlBuilder);
+        List<HotelRoom> rooms = new ArrayList<>();
+
+        rooms = hotelRoom.searchHotelRoomByParameter(hqlBuilder);
 
         //than
         assertThat(rooms.size(), is(2));

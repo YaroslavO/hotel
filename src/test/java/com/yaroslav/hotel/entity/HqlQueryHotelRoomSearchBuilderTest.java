@@ -3,20 +3,21 @@ package com.yaroslav.hotel.entity;
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 
 import java.util.Calendar;
 import java.util.Date;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.Matchers.comparesEqualTo;
+import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.*;
 
 /**
  * Created by employee on 6/10/15.
  */
-
+@RunWith(JUnit4.class)
 public class HqlQueryHotelRoomSearchBuilderTest {
 
     private HqlQueryHotelRoomSearchBuilder hqlBuilder;
@@ -53,12 +54,11 @@ public class HqlQueryHotelRoomSearchBuilderTest {
         assertThat(query, is(allTestQuery));
     }
 
-    @Test
+    @Test(expected = NullPointerException.class)
     public void generateQueryWithNullPeriod() throws Exception {
+        HqlQueryHotelRoomSearchBuilder hqlBuilder = new HqlQueryHotelRoomSearchBuilder();
         hqlBuilder.setPeriod(null);
-
-        String query = hqlBuilder.generateQuery();
-
+        hqlBuilder.generateQuery();
     }
 
     private Period createPeriod() {

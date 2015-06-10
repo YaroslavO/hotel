@@ -71,6 +71,11 @@ public class HqlQueryHotelRoomSearchBuilder {
     }
 
     public String generateQuery() {
+
+        if (period == null) {
+            throw new NullPointerException();
+        }
+
         String result = "";
 
         result += "select HR from HotelRoom HR where ";

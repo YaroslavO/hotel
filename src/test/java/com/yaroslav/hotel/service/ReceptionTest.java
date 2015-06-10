@@ -51,9 +51,7 @@ public class ReceptionTest extends AbstractDataBaseTest {
     @Test(expected = ReservationHotelRoomException.class)
     public void reservationRoomOnOneDay() throws Exception {
         //given
-        HotelRoom room = new HotelRoom();
-        room.setClassRoom(BudgetRoomType.STANDARD);
-        room.setType(SizeRoomType.SGL);
+        HotelRoom room = new HotelRoom(SizeRoomType.SGL, BudgetRoomType.STANDARD);
         hotelRoomDao.saveHotelRoom(room);
 
         //when
@@ -69,9 +67,7 @@ public class ReceptionTest extends AbstractDataBaseTest {
     @Test(expected = ReservationHotelRoomException.class)
     public void reservationRoomOnCustomCountDay() throws Exception {
         //given
-        HotelRoom room = new HotelRoom();
-        room.setClassRoom(BudgetRoomType.STANDARD);
-        room.setType(SizeRoomType.SGL);
+        HotelRoom room = new HotelRoom(SizeRoomType.SGL, BudgetRoomType.STANDARD);
         hotelRoomDao.saveHotelRoom(room);
 
         //when

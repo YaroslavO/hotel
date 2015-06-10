@@ -21,6 +21,10 @@ public class HotelRoomDaoImpl implements HotelRoomDao {
 
     @Override
     public HotelRoom getHotelRoomById(Integer id) {
+        if (id == null) {
+            throw new NullPointerException();
+        }
+
         return (HotelRoom) sessionFactory
                 .getCurrentSession()
                 .get(HotelRoom.class, id);
