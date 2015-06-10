@@ -119,5 +119,4 @@ public class HotelRoomServiceImplTest {
         verify(hotelRoomDao).getHotelRoomById(12);
         assertThat(room, Matchers.is(comparesEqualTo(null)));
     }
-
 }
