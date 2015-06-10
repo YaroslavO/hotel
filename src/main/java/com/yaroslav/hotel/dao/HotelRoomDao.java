@@ -12,7 +12,7 @@ import java.util.List;
 public interface HotelRoomDao {
     HotelRoom getHotelRoomById(Integer id);
 
-    void saveHotelRoom(HotelRoom hotelRoom);
+    HotelRoom saveHotelRoom(HotelRoom hotelRoom);
 
     HotelRoom updateHotelRoom(HotelRoom hotelRoom);
 

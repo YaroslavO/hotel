@@ -27,8 +27,9 @@ public class HotelRoomDaoImpl implements HotelRoomDao {
     }
 
     @Override
-    public void saveHotelRoom(HotelRoom hotelRoom) {
+    public HotelRoom saveHotelRoom(HotelRoom hotelRoom) {
         sessionFactory.getCurrentSession().save(hotelRoom);
+        return hotelRoom;
     }
 
     @Override
