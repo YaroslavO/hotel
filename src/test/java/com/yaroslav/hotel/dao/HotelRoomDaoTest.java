@@ -33,9 +33,7 @@ public class HotelRoomDaoTest extends AbstractDataBaseTest {
 
     @Test
     public void createNewHotelRoom() throws Exception {
-        HotelRoom room = new HotelRoom();
-        room.setClassRoom(BudgetRoomType.ECONOM);
-        room.setType(SizeRoomType.DBL);
+        HotelRoom room = new HotelRoom(SizeRoomType.DBL, BudgetRoomType.ECONOM);
 
         assertNull(room.getId());
 
@@ -49,43 +47,37 @@ public class HotelRoomDaoTest extends AbstractDataBaseTest {
     public void getAllHotelRoom() throws Exception {
         List<HotelRoom> rooms = hotelRoom.getAllHotelRoom();
 
-        createHotelRoom(SizeRoomType.SGL, BudgetRoomType.LUX);
-        createHotelRoom(SizeRoomType.DBL, BudgetRoomType.STANDARD);
+        makeHotelRoom();
         List<HotelRoom> roomsAfterCreate = hotelRoom.getAllHotelRoom();
 
         assertNotEquals(rooms, roomsAfterCreate);
     }
 
-    private void createHotelRoom(SizeRoomType typeRoom, BudgetRoomType classRoom) {
-        HotelRoom room = new HotelRoom();
-        room.setType(typeRoom);
-        room.setClassRoom(classRoom);
+    private void makeHotelRoom() {
+        HotelRoom room = new HotelRoom(SizeRoomType.SGL, BudgetRoomType.LUX);
+        hotelRoom.saveHotelRoom(room);
+        room = new HotelRoom(SizeRoomType.DBL, BudgetRoomType.STANDARD);
         hotelRoom.saveHotelRoom(room);
     }
 
     @Test
     public void deleteRoomHotelById() throws Exception {
         //given
-        HotelRoom room = new HotelRoom();
-
-        //when
-        room.setClassRoom(BudgetRoomType.ECONOM);
-        room.setType(SizeRoomType.SGL);
+        HotelRoom room = new HotelRoom(SizeRoomType.SGL, BudgetRoomType.ECONOM);
         hotelRoom.saveHotelRoom(room);
 
-//        than
+        //when
         assertThat(room.getId(), not(comparesEqualTo(null)));
-
         hotelRoom.deleteHotelRoom(room);
 
+//        than
         assertThat(hotelRoom.getAllHotelRoom().size(), is(0));
     }
 
     @Test
     public void searchHotelRoomByDate() throws Exception {
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(2015, Calendar.JUNE, 13);
-        hqlBuilder.setPeriod(new Period(calendar.getTime()));
+        Period period = createPeriod(2015, Calendar.JUNE, 13);
+        hqlBuilder.setPeriod(period);
 
         HotelRoom room = new HotelRoom(SizeRoomType.DBL, BudgetRoomType.LUX);
         hotelRoom.saveHotelRoom(room);
@@ -93,7 +85,7 @@ public class HotelRoomDaoTest extends AbstractDataBaseTest {
         room = new HotelRoom(SizeRoomType.SGL, BudgetRoomType.LUX);
         hotelRoom.saveHotelRoom(room);
 
-        Reservation reservation = new Reservation(new Period(calendar.getTime()));
+        Reservation reservation = new Reservation(period);
         reservation.setHotelRoom(room);
         reservationDao.save(reservation);
 
@@ -109,10 +101,8 @@ public class HotelRoomDaoTest extends AbstractDataBaseTest {
     @Test
     public void searchHotelRoomByType() throws Exception {
         //given
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(2015, Calendar.JUNE, 13);
-
-        hqlBuilder.setPeriod(new Period(calendar.getTime()));
+        Period period = createPeriod(2015, Calendar.JUNE, 13);
+        hqlBuilder.setPeriod(period);
 
         HotelRoom room = new HotelRoom(SizeRoomType.DBL, BudgetRoomType.LUX);
         hotelRoom.saveHotelRoom(room);
@@ -139,20 +129,14 @@ public class HotelRoomDaoTest extends AbstractDataBaseTest {
     @Test
     public void searchHotelRoomBySize() throws Exception {
         //given
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(2015, Calendar.JUNE, 13);
-        hqlBuilder.setPeriod(new Period(calendar.getTime()));
+        Period period = createPeriod(2015, Calendar.JUNE, 13);
+        hqlBuilder.setPeriod(period);
 
-        HotelRoom room = new HotelRoom(SizeRoomType.DBL, BudgetRoomType.LUX);
-        hotelRoom.saveHotelRoom(room);
-        room = new HotelRoom(SizeRoomType.SGL, BudgetRoomType.LUX);
-        hotelRoom.saveHotelRoom(room);
-        room = new HotelRoom(SizeRoomType.SGL, BudgetRoomType.LUX);
-        hotelRoom.saveHotelRoom(room);
+        makeHotelRoomForSizeSearch();
 
         //when
         hqlBuilder.setSizeRoomType(SizeRoomType.SGL);
-        List<HotelRoom> rooms = new ArrayList<>();
+        List<HotelRoom> rooms;
 
         rooms = hotelRoom.searchHotelRoomByParameter(hqlBuilder);
 
@@ -167,5 +151,20 @@ public class HotelRoomDaoTest extends AbstractDataBaseTest {
         //than
         assertThat(rooms.size(), is(1));
         assertThat(rooms.get(0).getType(), is(SizeRoomType.DBL));
+    }
+
+    private void makeHotelRoomForSizeSearch() {
+        HotelRoom room = new HotelRoom(SizeRoomType.DBL, BudgetRoomType.LUX);
+        hotelRoom.saveHotelRoom(room);
+        room = new HotelRoom(SizeRoomType.SGL, BudgetRoomType.LUX);
+        hotelRoom.saveHotelRoom(room);
+        room = new HotelRoom(SizeRoomType.SGL, BudgetRoomType.LUX);
+        hotelRoom.saveHotelRoom(room);
+    }
+
+    private Period createPeriod(int year, int month, int day) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, day);
+        return new Period(calendar.getTime());
     }
 }
