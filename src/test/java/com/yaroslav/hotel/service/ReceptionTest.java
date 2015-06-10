@@ -14,9 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Calendar;
 
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 /**
  * Created by employee on 6/9/15.

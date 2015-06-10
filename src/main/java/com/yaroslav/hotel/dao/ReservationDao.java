@@ -9,5 +9,6 @@ import com.yaroslav.hotel.entity.Reservation;
  */
 public interface ReservationDao {
     Reservation save(Reservation reservation);
+
     boolean canBeReserved(HotelRoom room, Period period);
 }

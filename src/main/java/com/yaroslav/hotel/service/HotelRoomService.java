@@ -2,10 +2,7 @@ package com.yaroslav.hotel.service;
 
 import com.yaroslav.hotel.entity.HotelRoom;
 import com.yaroslav.hotel.entity.Parameter;
-import com.yaroslav.hotel.entity.Period;
-import com.yaroslav.hotel.exception.ReservationHotelRoomException;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -13,7 +10,10 @@ import java.util.List;
  */
 public interface HotelRoomService {
     HotelRoom getHotelRoomById(Integer id);
+
     List<HotelRoom> searchHotelRoomByParameter(Parameter parameter);
+
     List<HotelRoom> getAllRoom();
+
     void addHotelRoom(HotelRoom room);
 }

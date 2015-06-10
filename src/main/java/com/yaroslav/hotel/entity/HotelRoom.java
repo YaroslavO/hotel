@@ -56,7 +56,7 @@ public class HotelRoom {
 
     @Override
     public String toString() {
-        return  "\t" + id + " | type = " + type.toString() +
+        return "\t" + id + " | type = " + type.toString() +
                 " | class = " + classRoom.toString();
     }
 }

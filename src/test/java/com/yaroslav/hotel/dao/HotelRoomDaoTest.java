@@ -77,7 +77,7 @@ public class HotelRoomDaoTest extends AbstractDataBaseTest {
         Calendar calendar = Calendar.getInstance();
         calendar.set(2015, Calendar.JUNE, 13);
         Parameter parameter = new Parameter();
-       parameter.period = new Period(calendar.getTime());
+        parameter.period = new Period(calendar.getTime());
 
         HotelRoom room = new HotelRoom(SizeRoomType.DBL, BudgetRoomType.LUX);
         hotelRoom.saveHotelRoom(room);

@@ -5,12 +5,10 @@ import com.yaroslav.hotel.exception.ReservationHotelRoomException;
 import com.yaroslav.hotel.service.HotelRoomService;
 import com.yaroslav.hotel.service.Reception;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 /**
