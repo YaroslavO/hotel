@@ -2,6 +2,7 @@ package com.yaroslav.hotel;
 
 import com.yaroslav.hotel.entity.*;
 import com.yaroslav.hotel.exception.ReservationHotelRoomException;
+import com.yaroslav.hotel.exception.SearchNullParameterException;
 import com.yaroslav.hotel.service.HotelRoomService;
 import com.yaroslav.hotel.service.Reception;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,7 +92,14 @@ public class Hotel {
         parameter.countHotelRoom = 10;
 //        parameter.setNotThisBudgetRoomType(BudgetRoomType.ECONOM);
 //        parameter.sizeRoomType = SizeRoomType.DBL;
-        List<HotelRoom> rooms = hotelRoomService.searchHotelRoomByParameter(parameter);
+        List<HotelRoom> rooms = null;
+
+        try {
+            rooms = hotelRoomService.searchHotelRoomByParameter(parameter);
+        } catch (SearchNullParameterException e) {
+            e.printStackTrace();
+        }
+
         return rooms
                 .stream()
                 .map(p -> p.toString())

@@ -18,6 +18,7 @@ import org.mockito.stubbing.Answer;
 import java.util.ArrayList;
 import java.util.List;
 
+import static junit.framework.TestCase.assertNull;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -65,6 +66,9 @@ public class HotelRoomServiceImplTest {
         });
 
         when(hotelRoomDao.getHotelRoomById(12)).thenReturn(null);
+
+        when(hotelRoomDao.getHotelRoomById(null)).thenThrow(NullPointerException.class);
+
         when(hotelRoomDao.searchHotelRoomByParameter(any(Parameter.class)))
                 .thenAnswer(new Answer<List<HotelRoom>>() {
                                 @Override
@@ -117,6 +121,14 @@ public class HotelRoomServiceImplTest {
 
         // then
         verify(hotelRoomDao).getHotelRoomById(12);
-        assertThat(room, Matchers.is(comparesEqualTo(null)));
+        assertNull(room);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void tryGetHotelRoomWithNullId() throws Exception {
+
+        HotelRoom room = hotelRoomService.getHotelRoomById(null);
+
+        verify(hotelRoomDao).getHotelRoomById(null);
     }
 }
