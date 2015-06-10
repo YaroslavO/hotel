@@ -1,7 +1,7 @@
 package com.yaroslav.hotel.dao;
 
 import com.yaroslav.hotel.entity.HotelRoom;
-import com.yaroslav.hotel.entity.Parameter;
+import com.yaroslav.hotel.entity.HqlQueryHotelRoomSearchBuilder;
 
 import java.util.List;
 
@@ -20,5 +20,5 @@ public interface HotelRoomDao {
 
     void deleteHotelRoom(HotelRoom room);
 
-    List<HotelRoom> searchHotelRoomByParameter(Parameter parameter);
+    List<HotelRoom> searchHotelRoomByParameter(HqlQueryHotelRoomSearchBuilder hqlQueryHotelRoomSearchBuilder);
 }

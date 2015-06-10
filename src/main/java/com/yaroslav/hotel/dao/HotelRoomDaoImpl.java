@@ -1,7 +1,7 @@
 package com.yaroslav.hotel.dao;
 
 import com.yaroslav.hotel.entity.HotelRoom;
-import com.yaroslav.hotel.entity.Parameter;
+import com.yaroslav.hotel.entity.HqlQueryHotelRoomSearchBuilder;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,49 +56,29 @@ public class HotelRoomDaoImpl implements HotelRoomDao {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<HotelRoom> searchHotelRoomByParameter(Parameter parameter) {
-
-        String query = "select HR from HotelRoom HR where ";
-
-        if (parameter.budgetRoomType != null) {
-            if (parameter.thisBudgetRoomType) {
-                query += "HR.classRoom = :classRoom  and ";
-            } else {
-                query += "HR.classRoom <> :classRoom  and ";
-            }
-        }
-
-        if (parameter.sizeRoomType != null) {
-            query += "HR.type = :sizeRoom and ";
-        }
-
-        query += "( not exists " +
-                "(from Reservation R where R.hotelRoom = HR and " +
-                "(R.startDate between :startDate and :endDate or " +
-                "R.endDate between :startDate and :endDate)))";
+    public List<HotelRoom> searchHotelRoomByParameter(HqlQueryHotelRoomSearchBuilder hqlBuilder) {
 
         Query allQuery = sessionFactory.getCurrentSession()
-                .createQuery(query);
+                .createQuery(hqlBuilder.generateQuery());
 
-        Date endDate = new Date(parameter.period.end.getTime());
-        Date beginDate = new Date(parameter.period.begin.getTime());
-        allQuery.setParameter("startDate", beginDate);
-        allQuery.setParameter("endDate", endDate);
+        allQuery.setParameter("startDate", new Date(hqlBuilder.getStartTime()));
+        allQuery.setParameter("endDate", new Date(hqlBuilder.getEndTime()));
 
-        if (parameter.budgetRoomType != null) {
-            allQuery.setParameter("classRoom", parameter.budgetRoomType);
-        }
+        setSafeQueryParameter(allQuery, "classRoom", hqlBuilder.getBudgetRoomType());
+        setSafeQueryParameter(allQuery, "sizeRoom", hqlBuilder.getSizeRoomType());
 
-        if (parameter.sizeRoomType != null) {
-            allQuery.setParameter("sizeRoom", parameter.sizeRoomType);
-        }
-
-        if (parameter.countHotelRoom == null) {
+        if (hqlBuilder.getCountHotelRoom() == null) {
             allQuery.setMaxResults(20);
         } else {
-            allQuery.setMaxResults(parameter.countHotelRoom);
+            allQuery.setMaxResults(hqlBuilder.getCountHotelRoom());
         }
 
         return allQuery.list();
+    }
+
+    private void setSafeQueryParameter(Query q, String paramName, Object paramValue) {
+        if (paramValue == null) return;
+
+        q.setParameter(paramName, paramValue);
     }
 }

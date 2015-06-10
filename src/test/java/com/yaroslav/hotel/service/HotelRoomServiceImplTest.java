@@ -3,7 +3,7 @@ package com.yaroslav.hotel.service;
 import com.yaroslav.hotel.dao.HotelRoomDao;
 import com.yaroslav.hotel.entity.BudgetRoomType;
 import com.yaroslav.hotel.entity.HotelRoom;
-import com.yaroslav.hotel.entity.Parameter;
+import com.yaroslav.hotel.entity.HqlQueryHotelRoomSearchBuilder;
 import com.yaroslav.hotel.entity.SizeRoomType;
 import com.yaroslav.hotel.exception.SearchNullParameterException;
 import org.hamcrest.Matchers;
@@ -69,7 +69,7 @@ public class HotelRoomServiceImplTest {
 
         when(hotelRoomDao.getHotelRoomById(null)).thenThrow(NullPointerException.class);
 
-        when(hotelRoomDao.searchHotelRoomByParameter(any(Parameter.class)))
+        when(hotelRoomDao.searchHotelRoomByParameter(any(HqlQueryHotelRoomSearchBuilder.class)))
                 .thenAnswer(new Answer<List<HotelRoom>>() {
                                 @Override
                                 public List<HotelRoom> answer(InvocationOnMock invocationOnMock) throws Throwable {
@@ -130,5 +130,12 @@ public class HotelRoomServiceImplTest {
         HotelRoom room = hotelRoomService.getHotelRoomById(null);
 
         verify(hotelRoomDao).getHotelRoomById(null);
+    }
+
+    @Test(expected = SearchNullParameterException.class)
+    public void searchHotelRoomWithNullParameter() throws Exception {
+        List<HotelRoom> rooms = hotelRoomService.searchHotelRoomByParameter(null);
+
+        verify(hotelRoomDao).searchHotelRoomByParameter(null);
     }
 }

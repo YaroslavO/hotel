@@ -2,7 +2,7 @@ package com.yaroslav.hotel.service;
 
 import com.yaroslav.hotel.dao.HotelRoomDao;
 import com.yaroslav.hotel.entity.HotelRoom;
-import com.yaroslav.hotel.entity.Parameter;
+import com.yaroslav.hotel.entity.HqlQueryHotelRoomSearchBuilder;
 import com.yaroslav.hotel.exception.SearchNullParameterException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,11 +41,11 @@ public class HotelRoomServiceImpl implements HotelRoomService {
     }
 
     @Override
-    public List<HotelRoom> searchHotelRoomByParameter(Parameter parameter) throws SearchNullParameterException {
-        if (parameter == null) {
+    public List<HotelRoom> searchHotelRoomByParameter(HqlQueryHotelRoomSearchBuilder hqlQueryHotelRoomSearchBuilder) throws SearchNullParameterException {
+        if (hqlQueryHotelRoomSearchBuilder == null) {
             throw new SearchNullParameterException();
         }
 
-        return hotelRoom.searchHotelRoomByParameter(parameter);
+        return hotelRoom.searchHotelRoomByParameter(hqlQueryHotelRoomSearchBuilder);
     }
 }

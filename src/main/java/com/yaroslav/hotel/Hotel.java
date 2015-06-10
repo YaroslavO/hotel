@@ -87,15 +87,15 @@ public class Hotel {
             e.printStackTrace();
         }
 
-        Parameter parameter = new Parameter();
-        parameter.period = period;
-        parameter.countHotelRoom = 10;
-//        parameter.setNotThisBudgetRoomType(BudgetRoomType.ECONOM);
-//        parameter.sizeRoomType = SizeRoomType.DBL;
+        HqlQueryHotelRoomSearchBuilder hqlBuilder = new HqlQueryHotelRoomSearchBuilder();
+        hqlBuilder.setPeriod(period);
+        hqlBuilder.setResultCountHotelRoom(10);
+//        hqlBuilder.setNotThisBudgetRoomType(BudgetRoomType.ECONOM);
+//        hqlBuilder.sizeRoomType = SizeRoomType.DBL;
         List<HotelRoom> rooms = null;
 
         try {
-            rooms = hotelRoomService.searchHotelRoomByParameter(parameter);
+            rooms = hotelRoomService.searchHotelRoomByParameter(hqlBuilder);
         } catch (SearchNullParameterException e) {
             e.printStackTrace();
         }

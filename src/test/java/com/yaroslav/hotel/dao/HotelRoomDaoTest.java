@@ -1,6 +1,7 @@
 package com.yaroslav.hotel.dao;
 
 import com.yaroslav.hotel.entity.*;
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -21,6 +22,13 @@ public class HotelRoomDaoTest extends AbstractDataBaseTest {
 
     @Autowired
     private ReservationDao reservationDao;
+
+    private HqlQueryHotelRoomSearchBuilder hqlBuilder;
+
+    @Before
+    public void setUp() throws Exception {
+        hqlBuilder = new HqlQueryHotelRoomSearchBuilder();
+    }
 
     @Test
     public void createNewHotelRoom() throws Exception {
@@ -76,8 +84,7 @@ public class HotelRoomDaoTest extends AbstractDataBaseTest {
     public void searchHotelRoomByDate() throws Exception {
         Calendar calendar = Calendar.getInstance();
         calendar.set(2015, Calendar.JUNE, 13);
-        Parameter parameter = new Parameter();
-        parameter.period = new Period(calendar.getTime());
+        hqlBuilder.setPeriod(new Period(calendar.getTime()));
 
         HotelRoom room = new HotelRoom(SizeRoomType.DBL, BudgetRoomType.LUX);
         hotelRoom.saveHotelRoom(room);
@@ -91,7 +98,7 @@ public class HotelRoomDaoTest extends AbstractDataBaseTest {
 
         reservation.setHotelRoom(room);
 
-        List<HotelRoom> rooms = hotelRoom.searchHotelRoomByParameter(parameter);
+        List<HotelRoom> rooms = hotelRoom.searchHotelRoomByParameter(hqlBuilder);
 
         assertNotNull(rooms);
         assertNotNull(rooms.get(0));
@@ -103,26 +110,26 @@ public class HotelRoomDaoTest extends AbstractDataBaseTest {
         //given
         Calendar calendar = Calendar.getInstance();
         calendar.set(2015, Calendar.JUNE, 13);
-        Parameter parameter = new Parameter();
-        parameter.period = new Period(calendar.getTime());
+
+        hqlBuilder.setPeriod(new Period(calendar.getTime()));
 
         HotelRoom room = new HotelRoom(SizeRoomType.DBL, BudgetRoomType.LUX);
         hotelRoom.saveHotelRoom(room);
         room = new HotelRoom(SizeRoomType.SGL, BudgetRoomType.LUX);
         hotelRoom.saveHotelRoom(room);
 
-        parameter.setNotThisBudgetRoomType(BudgetRoomType.LUX);
+        hqlBuilder.setNotThisBudgetRoomType(BudgetRoomType.LUX);
 
         //when
-        List<HotelRoom> rooms = hotelRoom.searchHotelRoomByParameter(parameter);
+        List<HotelRoom> rooms = hotelRoom.searchHotelRoomByParameter(hqlBuilder);
 
         //than
         assertNotNull(rooms);
         assertTrue(rooms.size() == 0);
 
         //when
-        parameter.thisBudgetRoomType = true;
-        rooms = hotelRoom.searchHotelRoomByParameter(parameter);
+        hqlBuilder.setThisBudgetRoomType(true);
+        rooms = hotelRoom.searchHotelRoomByParameter(hqlBuilder);
 
         //than
         assertTrue(rooms.size() == 2);
@@ -133,8 +140,7 @@ public class HotelRoomDaoTest extends AbstractDataBaseTest {
         //given
         Calendar calendar = Calendar.getInstance();
         calendar.set(2015, Calendar.JUNE, 13);
-        Parameter parameter = new Parameter();
-        parameter.period = new Period(calendar.getTime());
+        hqlBuilder.setPeriod(new Period(calendar.getTime()));
 
         HotelRoom room = new HotelRoom(SizeRoomType.DBL, BudgetRoomType.LUX);
         hotelRoom.saveHotelRoom(room);
@@ -144,16 +150,16 @@ public class HotelRoomDaoTest extends AbstractDataBaseTest {
         hotelRoom.saveHotelRoom(room);
 
         //when
-        parameter.sizeRoomType = SizeRoomType.SGL;
-        List<HotelRoom> rooms = hotelRoom.searchHotelRoomByParameter(parameter);
+        hqlBuilder.setSizeRoomType(SizeRoomType.SGL);
+        List<HotelRoom> rooms = hotelRoom.searchHotelRoomByParameter(hqlBuilder);
 
         //than
         assertThat(rooms.size(), is(2));
         assertThat(rooms.get(0).getType(), is(SizeRoomType.SGL));
 
         //when
-        parameter.sizeRoomType = SizeRoomType.DBL;
-        rooms = hotelRoom.searchHotelRoomByParameter(parameter);
+        hqlBuilder.setSizeRoomType(SizeRoomType.DBL);
+        rooms = hotelRoom.searchHotelRoomByParameter(hqlBuilder);
 
         //than
         assertThat(rooms.size(), is(1));
