@@ -9,10 +9,11 @@ import org.junit.runners.JUnit4;
 import java.util.Calendar;
 import java.util.Date;
 
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.comparesEqualTo;
 import static org.hamcrest.Matchers.not;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 /**
  * Created by employee on 6/10/15.

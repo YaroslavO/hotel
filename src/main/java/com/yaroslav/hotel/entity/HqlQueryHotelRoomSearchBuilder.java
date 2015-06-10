@@ -100,7 +100,7 @@ public class HqlQueryHotelRoomSearchBuilder {
 
     private String getGeneratedSizeRoomQuery() {
         if (sizeRoomType != null) {
-            return  "HR.type = :sizeRoom and ";
+            return "HR.type = :sizeRoom and ";
         }
 
         return "";
