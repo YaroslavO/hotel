@@ -11,6 +11,7 @@
     <title>Hotel</title>
   <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/hotel-style.css"/>
   <!-- Latest compiled and minified JavaScript -->
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 </head>
@@ -25,8 +26,14 @@
 </div>
 
 <div class="container">
-  <div class="row">
+  <div class="row well">
+    <div class="col-lg-4 center-block">
+      <a href="#" class="btn btn-primary btn-default"><span class="glyphicon glyphicon-book"></span> Viewing rooms</a>
+    </div>
 
+    <div class="col-lg-4 center-block">
+      <a href="#" class="btn btn-primary btn-default"><span class="glyphicon glyphicon-plus"></span> Add room</a>
+    </div>
   </div>
 </div>
 
