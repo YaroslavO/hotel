@@ -8,9 +8,33 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Hello</title>
+    <title>Hotel</title>
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 </head>
 <body>
-Hi world
+
+<div class="row">
+  <div class="col-lg-12">
+    <h1 class="page-header">
+      Main page Hotel
+    </h1>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <p class="text-muted">Copyright &copy; Best Hotel</p>
+  </div>
+</footer>
+
 </body>
 </html>
