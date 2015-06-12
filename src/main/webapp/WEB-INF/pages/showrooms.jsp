@@ -18,6 +18,8 @@
 <div class="container">
     <jsp:include page="header.jsp"/>
 
+    <jsp:include page="searchpanel.jsp"/>
+
     <div class="row">
         <table class="table">
             <tr>
