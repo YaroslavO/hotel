@@ -38,7 +38,7 @@
                     <div class="input-group-lg">
                         <form:select path="classRoom" id="class">
                             <form:option value="LUX"/>
-                            <form:option value="STANDART"/>
+                            <form:option value="STANDARD"/>
                             <form:option value="ECONOM"/>
                         </form:select>
                     </div>

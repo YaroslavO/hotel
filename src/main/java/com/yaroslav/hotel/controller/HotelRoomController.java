@@ -8,7 +8,6 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * Created by PC on 11.06.2015.
@@ -33,5 +32,13 @@ public class HotelRoomController {
         hotelRoomService.addHotelRoom(room);
 
         return "redirect:/";
+    }
+
+    @RequestMapping(value = "/rooms", method = RequestMethod.GET)
+    public String getRooms(ModelMap modelMap) {
+        modelMap.addAttribute("textHeader", "Show all rooms page");
+        modelMap.addAttribute("rooms", hotelRoomService.getAllRoom());
+
+        return "showrooms";
     }
 }

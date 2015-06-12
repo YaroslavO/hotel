@@ -18,7 +18,7 @@
 
     <div class="row well">
         <div class="col-lg-2 col-lg-offset-1">
-            <a href="#" class="btn btn-primary btn-default"><span class="glyphicon glyphicon-book"></span> Viewing rooms</a>
+            <a href="/rooms" class="btn btn-primary btn-default"><span class="glyphicon glyphicon-book"></span> Viewing rooms</a>
         </div>
 
         <div class="col-lg-2 col-lg-offset-7">
