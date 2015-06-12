@@ -13,21 +13,21 @@
 </head>
 <body>
 
-<jsp:include page="header.jsp"/>
-
 <div class="container">
+    <jsp:include page="header.jsp"/>
+
     <div class="row well">
-        <div class="col-lg-2">
+        <div class="col-lg-2 col-lg-offset-1">
             <a href="#" class="btn btn-primary btn-default"><span class="glyphicon glyphicon-book"></span> Viewing rooms</a>
         </div>
 
-        <div class="right col-lg-2">
-            <a href="#" class="btn btn-primary btn-default"><span class="glyphicon glyphicon-plus"></span> Add room</a>
+        <div class="col-lg-2 col-lg-offset-7">
+            <a href="/rooms/new" class="btn btn-primary btn-default"><span class="glyphicon glyphicon-plus"></span> Add room</a>
         </div>
     </div>
-</div>
 
-<jsp:include page="footer.jsp"/>
+    <jsp:include page="footer.jsp"/>
+</div>
 
 </body>
 </html>
