@@ -22,7 +22,7 @@ import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
-@ComponentScan("com.yaroslav.hotel")
+@ComponentScan("../java/com/yaroslav/hotel")
 @PropertySource("classpath:databaseTest.properties")
 public class DatabaseConfigTest {
     private static final String PROPERTY_NAME_DATABASE_DRIVER = "db.driver";
