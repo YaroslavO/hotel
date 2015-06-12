@@ -15,12 +15,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class Reception {
+public class ReceptionServiceImpl implements ReceptionService{
 
     private ReservationDao reservationDao;
 
     @Autowired
-    public Reception(ReservationDao reservationDao) {
+    public ReceptionServiceImpl(ReservationDao reservationDao) {
         this.reservationDao = reservationDao;
     }
 

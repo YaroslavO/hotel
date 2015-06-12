@@ -20,7 +20,7 @@ import static org.mockito.Mockito.*;
  * Created by employee on 6/9/15.
  */
 
-public class ReceptionTest extends AbstractDataBaseTest {
+public class ReceptionServiceImplTest extends AbstractDataBaseTest {
 
     @Autowired
     private HotelRoomDao hotelRoomDao;
@@ -28,14 +28,14 @@ public class ReceptionTest extends AbstractDataBaseTest {
     @Autowired
     private ReservationDao reservationDao;
 
-    private Reception reception;
+    private ReceptionServiceImpl receptionServiceImpl;
 
     @Before
     public void setUp() throws Exception {
 
         reservationDao = mock(ReservationDao.class);
 
-        reception = new Reception(reservationDao);
+        receptionServiceImpl = new ReceptionServiceImpl(reservationDao);
 
         when(reservationDao.save(any(Reservation.class))).thenAnswer(new Answer<Reservation>() {
 
@@ -59,9 +59,9 @@ public class ReceptionTest extends AbstractDataBaseTest {
         calendar.set(2015, Calendar.JUNE, 9);
 
         //than
-        Reservation reservation = reception.reservation(room, new Period(calendar.getTime()));
+        Reservation reservation = receptionServiceImpl.reservation(room, new Period(calendar.getTime()));
         verify(reservationDao).save(reservation);
-        reception.reservation(room, new Period(calendar.getTime()));
+        receptionServiceImpl.reservation(room, new Period(calendar.getTime()));
     }
 
     @Test(expected = ReservationHotelRoomException.class)
@@ -79,9 +79,9 @@ public class ReceptionTest extends AbstractDataBaseTest {
         Period period = new Period(beginDay.getTime(), endDay.getTime());
 
         //that
-        Reservation reservation = reception.reservation(room, period);
+        Reservation reservation = receptionServiceImpl.reservation(room, period);
         verify(reservationDao).save(reservation);
-        reception.reservation(room, period);
+        receptionServiceImpl.reservation(room, period);
     }
 
 }
