@@ -20,6 +20,8 @@
     <div class="row">
         <div class="col-lg-2">
             <ul class="nav nav-pills nav-stacked">
+                <li role="presentation"><a href="/" class="btn btn-primary btn-default"> Main page</a></li>
+                <li class="divider"></li>
                 <li role="presentation"><a href="/rooms" class="btn btn-primary btn-default"><span
                         class="glyphicon glyphicon-book"></span> Viewing rooms</a></li>
                 <li role="presentation" class="active"><a href="/rooms/new" class="btn btn-primary btn-default"><span

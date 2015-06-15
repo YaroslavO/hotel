@@ -42,7 +42,7 @@ public class HotelRoomController {
 
     @RequestMapping(value = "/rooms", method = RequestMethod.GET)
     public String getRooms(ModelMap modelMap) {
-        modelMap.addAttribute("textHeader", "Show all rooms page");
+        modelMap.addAttribute("textHeader", "Show all rooms");
         modelMap.addAttribute("rooms", hotelRoomService.getAllRoom());
 
         return "showrooms";
