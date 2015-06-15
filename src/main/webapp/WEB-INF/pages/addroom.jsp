@@ -18,7 +18,18 @@
     <jsp:include page="header.jsp"/>
 
     <div class="row">
-        <div class="col-lg-4 col-lg-offset-4">
+        <div class="col-lg-2">
+            <ul class="nav nav-pills nav-stacked">
+                <li role="presentation"><a href="/rooms" class="btn btn-primary btn-default"><span
+                        class="glyphicon glyphicon-book"></span> Viewing rooms</a></li>
+                <li role="presentation" class="active"><a href="/rooms/new" class="btn btn-primary btn-default"><span
+                        class="glyphicon glyphicon-plus"></span> Add room</a></li>
+            </ul>
+        </div>
+
+        <div class="col-lg-9 col-lg-offset-1">
+            <h1>${textHeader}</h1>
+
             <form:form action="/rooms" method="POST" id="form" modelAttribute="room" commandName="room" class="form-horizontal">
 
                 <div class="form-group-lg">

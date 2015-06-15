@@ -10,9 +10,7 @@
 <div class="row">
   <div class="col-lg-12">
     <h1 class="page-header">
-      <c:if test="${not empty textHeader}">
-        ${textHeader}
-      </c:if>
+      BEST HOTEL logo
     </h1>
   </div>
 </div>

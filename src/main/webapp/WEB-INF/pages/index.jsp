@@ -17,12 +17,18 @@
     <jsp:include page="header.jsp"/>
 
     <div class="row well">
-        <div class="col-lg-2 col-lg-offset-1">
-            <a href="/rooms" class="btn btn-primary btn-default"><span class="glyphicon glyphicon-book"></span> Viewing rooms</a>
+
+        <div class="col-lg-2">
+            <ul class="nav nav-pills nav-stacked">
+                <li role="presentation"><a href="/rooms" class="btn btn-primary btn-default"><span
+                        class="glyphicon glyphicon-book"></span> Viewing rooms</a></li>
+                <li role="presentation"><a href="/rooms/new" class="btn btn-primary btn-default"><span
+                        class="glyphicon glyphicon-plus"></span> Add room</a></li>
+            </ul>
         </div>
 
-        <div class="col-lg-2 col-lg-offset-7">
-            <a href="/rooms/new" class="btn btn-primary btn-default"><span class="glyphicon glyphicon-plus"></span> Add room</a>
+        <div class="col-lg-9 col-lg-offset-1">
+            <h1>main page best hotel</h1>
         </div>
     </div>
 
