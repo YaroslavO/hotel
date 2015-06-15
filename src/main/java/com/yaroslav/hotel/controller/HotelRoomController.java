@@ -52,11 +52,11 @@ public class HotelRoomController {
     public String searchRooms(ModelMap modelMap,
                               @RequestParam("startDate") String startDate,
                               @RequestParam("endDate") String endDate,
-                              @RequestParam("SNG") boolean sng,
-                              @RequestParam("DBL") boolean dbl,
-                              @RequestParam("LUX") boolean lux,
-                              @RequestParam("ECONOM") boolean econom,
-                              @RequestParam("STANDARD") boolean standard) {
+                              @RequestParam(value = "SNG", defaultValue = "false") boolean sng,
+                              @RequestParam(value = "DBL", defaultValue = "false") boolean dbl,
+                              @RequestParam(value = "LUX", defaultValue = "false") boolean lux,
+                              @RequestParam(value = "ECONOM", defaultValue = "false") boolean econom,
+                              @RequestParam(value = "STANDARD", defaultValue = "false") boolean standard) {
 
         Period period = createPeriodFromString(startDate, endDate);
         HqlQueryHotelRoomSearchBuilder hqlBuilder = new HqlQueryHotelRoomSearchBuilder();
