@@ -12,3 +12,9 @@
 <!-- Latest compiled and minified JavaScript -->
 <script src="${pageContext.request.contextPath}/resources/js/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+<script>
+  $(document).ready(function() {
+    $('ul.nav.nav-pills.nav-stacked').find('a[href="' + location.pathname + '"]')
+            .closest('li').addClass('active');
+  });
+</script>
