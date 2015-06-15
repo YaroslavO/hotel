@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping(value = "/rooms")
 public class HotelRoomController {
-
+// todo try redirect attributes
     @Autowired
     private HotelRoomService hotelRoomService;
 
