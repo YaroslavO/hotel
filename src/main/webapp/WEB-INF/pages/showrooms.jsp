@@ -52,7 +52,7 @@
                             </form>
                         </td>
                         <td>
-                            <a methods="DELETE" href="/rooms/${room.id}" class="btn btn-danger"><i class="icon-white icon-trash"></i></a>
+                            <a data-method="delete" href="/rooms/${room.id}" class="btn btn-danger"><i class="icon-white icon-trash"></i></a>
                         </td>
                     </tr>
                 </c:forEach>
