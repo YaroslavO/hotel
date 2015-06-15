@@ -14,7 +14,7 @@ import static org.hamcrest.core.Is.is;
  */
 
 @RunWith(value = BlockJUnit4ClassRunner.class)
-public class searchFormEntityTest {
+public class SearchFormEntityTest {
 
     @Test
     public void createNewEmptySearchEntity() throws Exception {
