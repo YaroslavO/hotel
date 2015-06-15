@@ -44,29 +44,19 @@ public class HotelRoomController {
     public String getRooms(ModelMap modelMap) {
         modelMap.addAttribute("textHeader", "Show all rooms");
         modelMap.addAttribute("rooms", hotelRoomService.getAllRoom());
+        modelMap.addAttribute("searchForm", new SearchFormEntity());
 
         return "showrooms";
     }
 
     @RequestMapping(value = "/rooms/search", method = RequestMethod.POST)
     public String searchRooms(ModelMap modelMap,
-                              @RequestParam("startDate") String startDate,
-                              @RequestParam("endDate") String endDate,
-                              @RequestParam(value = "SNG", defaultValue = "false") boolean sng,
-                              @RequestParam(value = "DBL", defaultValue = "false") boolean dbl,
-                              @RequestParam(value = "LUX", defaultValue = "false") boolean lux,
-                              @RequestParam(value = "ECONOM", defaultValue = "false") boolean econom,
-                              @RequestParam(value = "STANDARD", defaultValue = "false") boolean standard) {
-
-        Period period = createPeriodFromString(startDate, endDate);
-        HqlQueryHotelRoomSearchBuilder hqlBuilder = new HqlQueryHotelRoomSearchBuilder();
-        hqlBuilder.setPeriod(period);
-        hqlBuilder.setSizeRoomType(parseSizeParam(sng, dbl));
-        hqlBuilder.setBudgetRoomType(parseBudgetParam(lux, econom, standard));
-        hqlBuilder.setThisBudgetRoomType(checkRequestParam(lux, econom, standard));
+                              @ModelAttribute(value = "searchForm") SearchFormEntity searchForm) {
         modelMap.addAttribute("textHeader", "Show search room");
+        modelMap.addAttribute("searchForm", new SearchFormEntity());
 
         try {
+            HqlQueryHotelRoomSearchBuilder hqlBuilder = searchForm.createHQLBuilderForThisFormEntity();
             modelMap.addAttribute("rooms", hotelRoomService.searchHotelRoomByParameter(hqlBuilder));
         } catch (SearchNullParameterException e) {
             e.printStackTrace();
@@ -75,60 +65,4 @@ public class HotelRoomController {
         return "showrooms";
     }
 
-    private Boolean checkRequestParam(boolean lux, boolean econom, boolean standard) {
-        return !(econom && standard) && !(lux && standard) && !(lux && econom);
-    }
-
-    private BudgetRoomType parseBudgetParam(boolean lux, boolean econom, boolean standard) {
-        if (lux && econom && standard) {
-            return null;
-        }
-
-        if (lux && econom) {
-            return BudgetRoomType.STANDARD;
-        }
-
-        if (lux && standard) {
-            return BudgetRoomType.ECONOM;
-        }
-
-        if (econom && standard) {
-            return BudgetRoomType.LUX;
-        }
-
-        if (lux) {
-            return BudgetRoomType.LUX;
-        }
-
-        if (econom) {
-            return BudgetRoomType.ECONOM;
-        }
-
-        if (standard) {
-            return BudgetRoomType.STANDARD;
-        }
-
-        return null;
-    }
-
-    private SizeRoomType parseSizeParam(boolean sgl, boolean dbl) {
-        return sgl
-                ? SizeRoomType.SGL
-                : dbl
-                ? SizeRoomType.DBL
-                : null;
-    }
-
-    private Period createPeriodFromString(String startDate, String endDate) {
-        Period period = null;
-        DateFormat formatter = new SimpleDateFormat("yy-mm-dd");
-
-        try {
-            period = new Period(formatter.parse(startDate), formatter.parse(endDate));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        return period;
-    }
 }

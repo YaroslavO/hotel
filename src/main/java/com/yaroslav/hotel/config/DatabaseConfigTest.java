@@ -17,12 +17,12 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 /**
- * Created by employee on 6/10/15.
+ * Created by employee on 6/5/15.
  */
 
 @Configuration
 @EnableTransactionManagement
-@ComponentScan("../java/com/yaroslav/hotel")
+@ComponentScan("com.yaroslav.hotel")
 @PropertySource("classpath:databaseTest.properties")
 public class DatabaseConfigTest {
     private static final String PROPERTY_NAME_DATABASE_DRIVER = "db.driver";

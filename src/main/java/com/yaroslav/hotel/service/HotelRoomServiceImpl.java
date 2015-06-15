@@ -20,6 +20,9 @@ public class HotelRoomServiceImpl implements HotelRoomService {
 
     private HotelRoomDao hotelRoom;
 
+    public HotelRoomServiceImpl() {
+    }
+
     @Autowired
     public HotelRoomServiceImpl(HotelRoomDao hotelRoom) {
         this.hotelRoom = hotelRoom;

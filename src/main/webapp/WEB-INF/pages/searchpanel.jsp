@@ -1,3 +1,4 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: employee
@@ -13,50 +14,53 @@
         Search
     </button>
 
+    <h1> Search room for reservation</h1>
+
     <div class="collapse" id="collapseExample">
             <h1> Search room for reservation </h1>
 
-            <form action="/rooms/search" method="POST" class="form-horizontal">
+            <form:form action="/rooms/search" method="POST" class="form-horizontal" modelAttribute="searchForm" commandName="searchForm">
                 <label for="group-calendar">Choose period</label>
                 <div id="group-calendar" class="form-group-lg">
                     <label>
-                        Start date: <input type="date" name="startDate" id="SnapHost_Calendar2"/>
+                        Start date: <form:input path="startDate" type="date" id="SnapHost_Calendar2"/>
                     </label>
                      -
                     <label>
-                        edn date: <input type="date" name="endDate"/>
+                        edn date: <form:input path="endDate" type="date" name="endDate"/>
                     </label>
                 </div>
 
                 <label for="size-group">Size hotel room: </label>
                     <div id="size-group" class="btn-group" data-toggle="buttons">
                         <label class="btn">
-                            <input type="checkbox" autocomplete="off" name="SNG"> Single
+                            <form:checkbox value="false" path="sizeSGL" autocomplete="off" cssClass="checkbox" /> Single
                         </label>
 
                         <label class="btn">
-                            <input type="checkbox" autocomplete="off" name="DBL"> Double
+                            <form:checkbox value="false" path="sizeDBL" autocomplete="off" cssClass="checkbox"/> Double
                         </label>
                     </div>
+
                 <br>
                 <label for="type-group">Type hotel room: </label>
                     <div id="type-group" class="btn-group" data-toggle="buttons">
                         <label class="btn">
-                            <input type="checkbox" autocomplete="off" name="LUX"> Lux
+                            <form:checkbox value="false" path="budgetTypeLux" autocomplete="off" cssClass="checkbox"/> Lux
                         </label>
 
                         <label class="btn">
-                            <input type="checkbox" autocomplete="off" name="ECONOM"> Econom
+                            <form:checkbox value="false" path="budgetTypeEconom" autocomplete="off" cssClass="checkbox"/> Econom
                         </label>
 
                         <label class="btn">
-                            <input type="checkbox" autocomplete="off" name="STANDARD"> Standard
+                            <form:checkbox path="budgetTypeStandard" value="false" autocomplete="off" cssClass="checkbox"/> Standard
                         </label>
                     </div>
 
                 <input type="submit"
                        value="Search"
                        class="btn btn-info pull-right"/>
-            </form>
+            </form:form>
     </div>
 </div>

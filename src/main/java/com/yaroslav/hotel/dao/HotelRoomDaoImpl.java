@@ -16,8 +16,15 @@ import java.util.List;
 @Repository
 public class HotelRoomDaoImpl implements HotelRoomDao {
 
-    @Autowired
     private SessionFactory sessionFactory;
+
+    public HotelRoomDaoImpl() {
+    }
+
+    @Autowired
+    public HotelRoomDaoImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
     @Override
     public HotelRoom getHotelRoomById(Integer id) {
