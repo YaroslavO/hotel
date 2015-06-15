@@ -1,8 +1,6 @@
 package com.yaroslav.hotel.controller;
 
-import com.yaroslav.hotel.entity.HotelRoom;
-import com.yaroslav.hotel.entity.HqlQueryHotelRoomSearchBuilder;
-import com.yaroslav.hotel.entity.Period;
+import com.yaroslav.hotel.entity.*;
 import com.yaroslav.hotel.exception.SearchNullParameterException;
 import com.yaroslav.hotel.service.HotelRoomService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,12 +51,19 @@ public class HotelRoomController {
     @RequestMapping(value = "/rooms/search", method = RequestMethod.POST)
     public String searchRooms(ModelMap modelMap,
                               @RequestParam("startDate") String startDate,
-                              @RequestParam("endDate") String endDate) {
+                              @RequestParam("endDate") String endDate,
+                              @RequestParam("SNG") boolean sng,
+                              @RequestParam("DBL") boolean dbl,
+                              @RequestParam("LUX") boolean lux,
+                              @RequestParam("ECONOM") boolean econom,
+                              @RequestParam("STANDARD") boolean standard) {
 
         Period period = createPeriodFromString(startDate, endDate);
         HqlQueryHotelRoomSearchBuilder hqlBuilder = new HqlQueryHotelRoomSearchBuilder();
         hqlBuilder.setPeriod(period);
-
+        hqlBuilder.setSizeRoomType(parseSizeParam(sng, dbl));
+        hqlBuilder.setBudgetRoomType(parseBudgetParam(lux, econom, standard));
+        hqlBuilder.setThisBudgetRoomType(checkRequestParam(lux, econom, standard));
         modelMap.addAttribute("textHeader", "Show search room");
 
         try {
@@ -68,6 +73,50 @@ public class HotelRoomController {
         }
 
         return "showrooms";
+    }
+
+    private Boolean checkRequestParam(boolean lux, boolean econom, boolean standard) {
+        return !(econom && standard) && !(lux && standard) && !(lux && econom);
+    }
+
+    private BudgetRoomType parseBudgetParam(boolean lux, boolean econom, boolean standard) {
+        if (lux && econom && standard) {
+            return null;
+        }
+
+        if (lux && econom) {
+            return BudgetRoomType.STANDARD;
+        }
+
+        if (lux && standard) {
+            return BudgetRoomType.ECONOM;
+        }
+
+        if (econom && standard) {
+            return BudgetRoomType.LUX;
+        }
+
+        if (lux) {
+            return BudgetRoomType.LUX;
+        }
+
+        if (econom) {
+            return BudgetRoomType.ECONOM;
+        }
+
+        if (standard) {
+            return BudgetRoomType.STANDARD;
+        }
+
+        return null;
+    }
+
+    private SizeRoomType parseSizeParam(boolean sgl, boolean dbl) {
+        return sgl
+                ? SizeRoomType.SGL
+                : dbl
+                ? SizeRoomType.DBL
+                : null;
     }
 
     private Period createPeriodFromString(String startDate, String endDate) {

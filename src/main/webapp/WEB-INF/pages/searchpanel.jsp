@@ -41,7 +41,7 @@
                     </label>
 
                     <label class="btn">
-                        <input type="checkbox" autocomplete="off" name="BUDGET"> Budget
+                        <input type="checkbox" autocomplete="off" name="ECONOM"> Econom
                     </label>
 
                     <label class="btn">
