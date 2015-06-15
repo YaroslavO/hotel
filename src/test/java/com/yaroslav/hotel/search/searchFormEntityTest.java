@@ -1,10 +1,11 @@
-package com.yaroslav.hotel;
+package com.yaroslav.hotel.search;
 
 import com.yaroslav.hotel.entity.SearchFormEntity;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.BlockJUnit4ClassRunner;
 
+import static junit.framework.TestCase.assertNull;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
@@ -19,13 +20,13 @@ public class searchFormEntityTest {
     public void createNewEmptySearchEntity() throws Exception {
         SearchFormEntity searchEntity = new SearchFormEntity();
 
-        assertThat(searchEntity.getStartDate(), is(""));
-        assertThat(searchEntity.getEndDate(), is(""));
-        assertThat(searchEntity.getSizeSGL(), is(false));
-        assertThat(searchEntity.getSizeDBL(), is(false));
-        assertThat(searchEntity.getBudgetTypeLux(), is(false));
-        assertThat(searchEntity.getBudgetTypeStandard(), is(false));
-        assertThat(searchEntity.getBudgetTypeEconom(), is(false));
+        assertNull(searchEntity.getStartDate());
+        assertNull(searchEntity.getEndDate());
+        assertNull(searchEntity.getSizeSGL());
+        assertNull(searchEntity.getSizeDBL());
+        assertNull(searchEntity.getBudgetTypeLux());
+        assertNull(searchEntity.getBudgetTypeStandard());
+        assertNull(searchEntity.getBudgetTypeEconom());
     }
 
     @Test
@@ -51,11 +52,13 @@ public class searchFormEntityTest {
         assertThat(searchEntity.getBudgetTypeEconom(), is(true));
     }
 
-//    @Test(expected = ParseException.class)
-//    public void generateHQLBuilderWithEmptyDateStringSearchEntity() throws Exception {
-//        SearchFormEntity searchFormEntity = new SearchFormEntity();
-//        searchFormEntity.createHQLBuilderForThisFormEntity();
+//    @Test
+//    public void generateHQLWithNotEmptyDate() throws Exception {
+//        SearchFormEntity searchEntity = new SearchFormEntity();
+//        String startDate = "2015-05-12";
+//        String endDate = "2015-05-15";
+//
+//        searchEntity.setStartDate(startDate);
+//        searchEntity.setEndDate(endDate);
 //    }
-
-
 }

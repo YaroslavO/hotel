@@ -7,25 +7,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 /**
  * Created by PC on 11.06.2015.
  */
 
 @Controller
+@RequestMapping(value = "/rooms")
 public class HotelRoomController {
 
     @Autowired
     private HotelRoomService hotelRoomService;
 
-    @RequestMapping(value = "/rooms/new", method = RequestMethod.GET)
+    @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String getCreateNewRoomPage(ModelMap modelMap) {
         modelMap.addAttribute("textHeader", "Add new hotel room in database");
         modelMap.addAttribute("room", new HotelRoom());
@@ -33,14 +30,14 @@ public class HotelRoomController {
         return "addroom";
     }
 
-    @RequestMapping(value = "/rooms", method = RequestMethod.POST)
+    @RequestMapping(method = RequestMethod.POST)
     public String createNewHotelRoom(@ModelAttribute(value = "room") HotelRoom room) {
         hotelRoomService.addHotelRoom(room);
 
         return "redirect:/";
     }
 
-    @RequestMapping(value = "/rooms", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public String getRooms(ModelMap modelMap) {
         modelMap.addAttribute("textHeader", "Show all rooms");
         modelMap.addAttribute("rooms", hotelRoomService.getAllRoom());
@@ -49,7 +46,7 @@ public class HotelRoomController {
         return "showrooms";
     }
 
-    @RequestMapping(value = "/rooms/search", method = RequestMethod.POST)
+    @RequestMapping(value = "/search", method = RequestMethod.POST)
     public String searchRooms(ModelMap modelMap,
                               @ModelAttribute(value = "searchForm") SearchFormEntity searchForm) {
         modelMap.addAttribute("textHeader", "Show search room");
@@ -63,6 +60,14 @@ public class HotelRoomController {
         }
 
         return "showrooms";
+    }
+
+    @RequestMapping(value = "/{id}",method = RequestMethod.DELETE)
+    public String deleteRoom(@PathVariable("id") Integer id) {
+        HotelRoom room = hotelRoomService.getHotelRoomById(id);
+        hotelRoomService.delete(room);
+
+        return "redirect:/";
     }
 
 }

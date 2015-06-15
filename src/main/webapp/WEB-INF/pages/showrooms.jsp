@@ -26,6 +26,8 @@
                 <li role="presentation"><a href="/" class="btn btn-primary btn-default"> Main page</a></li>
             </ul>
 
+            <br>
+
             <ul class="nav nav-pills nav-stacked">
                 <li role="presentation" class="active"><a href="/rooms" class="btn btn-primary btn-default"><span
                         class="glyphicon glyphicon-book"></span> Viewing rooms</a></li>
@@ -61,6 +63,9 @@
                                        value="reservation"
                                        class="btn btn-info pull-right"/>
                             </form>
+                        </td>
+                        <td>
+                            <a methods="DELETE" href="/rooms/${room.id}" class="btn btn-danger"><i class="icon-white icon-trash"></i></a>
                         </td>
                     </tr>
                 </c:forEach>

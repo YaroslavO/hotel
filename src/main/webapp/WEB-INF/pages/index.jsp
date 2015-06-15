@@ -22,6 +22,9 @@
             <ul class="nav nav-pills nav-stacked">
                 <li role="presentation" class="active"><a href="/" class="btn btn-primary btn-default"> Main page</a></li>
             </ul>
+
+            <br>
+
             <ul class="nav nav-pills nav-stacked">
                 <li role="presentation"><a href="/rooms" class="btn btn-primary btn-default"><span
                         class="glyphicon glyphicon-book"></span> Viewing rooms</a></li>

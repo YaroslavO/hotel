@@ -18,6 +18,13 @@ public class SearchFormEntity {
     private Boolean budgetTypeStandard;
 
     public SearchFormEntity() {
+        sizeSGL = false;
+        sizeDBL = false;
+        budgetTypeStandard = false;
+        budgetTypeEconom = false;
+        budgetTypeLux = false;
+        startDate = "";
+        endDate = "";
     }
 
     public String getStartDate() {

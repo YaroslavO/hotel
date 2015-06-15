@@ -17,8 +17,6 @@
     <h1> Search room for reservation</h1>
 
     <div class="collapse" id="collapseExample">
-            <h1> Search room for reservation </h1>
-
             <form:form action="/rooms/search" method="POST" class="form-horizontal" modelAttribute="searchForm" commandName="searchForm">
                 <label for="group-calendar">Choose period</label>
                 <div id="group-calendar" class="form-group-lg">

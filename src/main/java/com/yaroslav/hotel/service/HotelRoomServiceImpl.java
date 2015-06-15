@@ -51,4 +51,9 @@ public class HotelRoomServiceImpl implements HotelRoomService {
 
         return hotelRoom.searchHotelRoomByParameter(hqlQueryHotelRoomSearchBuilder);
     }
+
+    @Override
+    public void delete(HotelRoom room) {
+        hotelRoom.deleteHotelRoom(room);
+    }
 }
