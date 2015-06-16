@@ -3,6 +3,7 @@ package com.yaroslav.hotel.entity;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created by employee on 6/15/15.
@@ -96,16 +97,25 @@ public class SearchFormEntity {
     }
 
     private Period createPeriodFromStringDate() {
-        Period period = null;
+        return new Period(parseStringDate(startDate), parseStringDate(endDate));
+    }
+
+    private Date parseStringDate(String startDate) {
         DateFormat formatter = new SimpleDateFormat("yy-mm-dd");
 
         try {
-            period = new Period(formatter.parse(startDate), formatter.parse(endDate));
+            formatter.parse(startDate);
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        return period;
+        return null;
+    }
+
+    public static String formatToStringWithDate(Date date) {
+        DateFormat formatter = new SimpleDateFormat("yy-mm-dd");
+
+        return formatter.format(date);
     }
 
     private SizeRoomType parseSizeParam() {
