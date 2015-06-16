@@ -104,7 +104,7 @@ public class SearchFormEntity {
         DateFormat formatter = new SimpleDateFormat("yy-mm-dd");
 
         try {
-            formatter.parse(startDate);
+            return formatter.parse(startDate);
         } catch (ParseException e) {
             e.printStackTrace();
         }
