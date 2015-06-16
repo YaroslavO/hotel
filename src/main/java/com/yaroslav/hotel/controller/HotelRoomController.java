@@ -46,6 +46,14 @@ public class HotelRoomController {
         return "showrooms";
     }
 
+    @RequestMapping(value = "/search", method = RequestMethod.GET)
+    public String getSearchPage(ModelMap modelMap) {
+        modelMap.addAttribute("searchForm", new SearchFormEntity());
+        modelMap.addAttribute("textHeader", "Show search room");
+
+        return "search";
+    }
+
     @RequestMapping(value = "/search", method = RequestMethod.POST)
     public String searchRooms(ModelMap modelMap,
                               @ModelAttribute(value = "searchForm") SearchFormEntity searchForm) {
@@ -59,7 +67,7 @@ public class HotelRoomController {
             e.printStackTrace();
         }
 
-        return "showrooms";
+        return "search";
     }
 
     @RequestMapping(value = "/{id}",method = RequestMethod.DELETE)
