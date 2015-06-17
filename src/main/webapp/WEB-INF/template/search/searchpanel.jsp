@@ -93,6 +93,19 @@
 //    };
 //
 //    $('#reportrange').data('daterangepicker').setOptions(optionSet1, cb);
+
+    var optionSet = {
+      dateFormat: $.datepicker.W3C,
+      firstDay: 1,
+      selectOtherMonths: true,
+      showOtherMonths: true,
+      showWeek: true,
+      rangeSelect: true,
+      monthsToShow: 2
+    };
+
+    $.datepicker.setDefaults(optionSet);
+
     $( "#datepicker" ).datepicker();
   });
 </script>
