@@ -13,35 +13,13 @@
 <script type="text/javascript">
     $(document).ready(function () {
 
-    //    maybe use
-
-    //    var optionSet = {
-    //      dateFormat: $.datepicker.W3C,
-    //      firstDay: 1,
-    //      selectOtherMonths: true,
-    //      showOtherMonths: true,
-    //      showWeek: true,
-    //      rangeSelect: true,
-    //      monthsToShow: 2
-    //    };
-    //
-    //    $.datepicker.setDefaults(optionSet);
-    //
-    //    $( "#datepicker" ).datepicker();
-    //  });
-</script>
-
-<script>
-    /*
-     * jQuery UI Datepicker: Using Datepicker to Select Date Range
-     * http://salman-w.blogspot.com/2013/01/jquery-ui-datepicker-examples.html
-     */
-    $(function () {
-        $("#datepicker").datepicker({
-            monthsToShow: 2,
+        $.datepicker.setDefaults({
             selectOtherMonths: true,
             firstDay: 1,
             dateFormat: $.datepicker.W3C,
+        });
+
+        $("#datepicker").datepicker({
             beforeShowDay: function (date) {
                 var date1 = $.datepicker.parseDate($.datepicker._defaults.dateFormat, $("#startDate").val());
                 var date2 = $.datepicker.parseDate($.datepicker._defaults.dateFormat, $("#endDate").val());
@@ -81,7 +59,7 @@
                 <div id="datepicker"></div>
                 <label>Select date:
                     <form:input type="text" path="startDate" id="startDate"/>
-                    <form:input type="text" path="endDate" name="endDate" id="endDate"/>
+                    <form:input type="text" path="endDate" id="endDate"/>
                 </label>
             </div>
 
