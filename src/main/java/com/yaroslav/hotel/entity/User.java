@@ -25,7 +25,7 @@ public class User {
     @Column(name = "password")
     private Integer password;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY)
     @LazyCollection(LazyCollectionOption.FALSE)
     @JoinTable(name="user_role",
             joinColumns = {@JoinColumn(name = "fk_user", referencedColumnName = "id")},
