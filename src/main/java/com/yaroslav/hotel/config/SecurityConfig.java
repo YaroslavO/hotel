@@ -59,10 +59,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .deleteCookies("JSESSIONID")
                     .invalidateHttpSession(true)
                 .and()
-                    .csrf()
-                .and()
-                    .rememberMe()
-                    .tokenValiditySeconds(1209600);
+                    .csrf().disable();
+//                .and()
+//                    .rememberMe()
+//                    .tokenValiditySeconds(1209600);
     }
 
     @Bean
