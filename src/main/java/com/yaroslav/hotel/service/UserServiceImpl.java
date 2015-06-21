@@ -20,4 +20,9 @@ public class UserServiceImpl implements UserService {
     public User getUserByLogin(String login) {
         return userDao.getUserByLogin(login);
     }
+
+    @Override
+    public void save(User user) {
+        userDao.save(user);
+    }
 }

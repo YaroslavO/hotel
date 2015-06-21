@@ -23,4 +23,11 @@ public class UserDaoImpl implements UserDao {
                 .setParameter("login", login)
                 .uniqueResult();
     }
+
+    @Override
+    public void save(User user) {
+        sessionFactory
+                .getCurrentSession()
+                .save(user);
+    }
 }

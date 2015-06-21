@@ -7,4 +7,6 @@ import com.yaroslav.hotel.entity.User;
  */
 public interface UserDao {
     User getUserByLogin(String login);
+
+    void save(User user);
 }
