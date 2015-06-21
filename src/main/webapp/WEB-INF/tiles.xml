@@ -28,4 +28,8 @@
         <put-attribute name="search" value="/WEB-INF/template/search/searchpanel.jsp"/>
     </definition>
 
+    <definition name="login" extends="DefaultTemplate">
+        <put-attribute name="search" value="/WEB-INF/template/login/body.jsp"/>
+    </definition>
+
 </tiles-definitions>

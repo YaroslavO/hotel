@@ -18,6 +18,6 @@
             <button class="btn btn-lg btn-primary btn-block" type="submit">Увійти</button>
         </form>
         </br>
-        <span style="color:red">${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}</span>
+        <span style="color:red">${err}</span>
     </div>
 </div>

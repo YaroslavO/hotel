@@ -17,7 +17,7 @@
   <script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
   <script>
     $(document).ready(function() {
-      $('ul.nav.nav-pills.nav-stacked').find('a[href="' + location.pathname + '"]')
+      $('ul.nav.navbar-nav').find('a[href="' + location.pathname + '"]')
               .closest('li').addClass('active');
     });
   </script>

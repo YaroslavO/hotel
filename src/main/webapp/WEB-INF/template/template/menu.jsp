@@ -7,17 +7,27 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="col-lg-2">
-  <ul class="nav nav-pills nav-stacked">
-    <li role="presentation"><a href="/" class="btn btn-primary btn-default"> Main page</a></li>
-  </ul>
+  <nav class="navbar navbar-default" role="navigation">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">Best Hotel</a>
+    </div>
 
-  <br>
-
-  <ul class="nav nav-pills nav-stacked">
-    <li role="presentation"><a href="/rooms" class="btn btn-primary btn-default"><span
-            class="glyphicon glyphicon-book"></span> Viewing rooms</a></li>
-    <li role="presentation"><a href="/rooms/new" class="btn btn-primary btn-default"><span
-            class="glyphicon glyphicon-plus"></span> Add room</a></li>
-    <li role="presentation"><a href="/rooms/search" class="btn btn-primary btn-default"><span class="glyphicon glyphicon-search"></span> Search</a></li>
-  </ul>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse navbar-ex1-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="/">Main</a></li>
+        <li><a href="/rooms">Viewing rooms</a></li>
+        <li><a href="/rooms/new">Add room</a></li>
+        <li><a href="/rooms/search">Search</a></li>
+        <li><a href="/login">Login</a></li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </nav>
 </div>
