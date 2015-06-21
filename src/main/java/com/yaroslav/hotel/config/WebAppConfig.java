@@ -7,7 +7,6 @@ import org.springframework.web.servlet.config.annotation.DefaultServletHandlerCo
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import org.springframework.web.servlet.view.JstlView;
 import org.springframework.web.servlet.view.UrlBasedViewResolver;
 import org.springframework.web.servlet.view.tiles3.TilesConfigurer;
 import org.springframework.web.servlet.view.tiles3.TilesView;
@@ -32,7 +31,7 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
     @Bean
     public TilesConfigurer tilesConfigurer() {
         TilesConfigurer tilesConfigurer = new TilesConfigurer();
-        tilesConfigurer.setDefinitions(new String[] { "/WEB-INF/tiles.xml" });
+        tilesConfigurer.setDefinitions("/WEB-INF/tiles.xml");
         tilesConfigurer.setCheckRefresh(true);
         return tilesConfigurer;
     }
