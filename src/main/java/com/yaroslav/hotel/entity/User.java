@@ -19,11 +19,11 @@ public class User {
     @GeneratedValue
     private Integer id;
 
-    @Column(name = "user_name")
-    private String userName;
+    @Column(name = "login")
+    private String login;
 
     @Column(name = "password")
-    private Integer password;
+    private String password;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @LazyCollection(LazyCollectionOption.FALSE)
@@ -40,19 +40,19 @@ public class User {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getLogin() {
+        return login;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setLogin(String login) {
+        this.login = login;
     }
 
-    public Integer getPassword() {
+    public String getPassword() {
         return password;
     }
 
-    public void setPassword(Integer password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 
