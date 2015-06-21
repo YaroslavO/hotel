@@ -33,8 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
                 .jdbcAuthentication()
-                .dataSource(dataSource)
-                .passwordEncoder(new Md5PasswordEncoder());
+                .dataSource(dataSource);
     }
 
     @Override
@@ -42,8 +41,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.userDetailsService(customUserDetailsService)
                 .authorizeRequests()
                     .antMatchers("/").permitAll()
-                    .antMatchers("/control/**").hasRole("ADMIN")
-                    .antMatchers("/acount/**").authenticated()
                 .and()
                     .formLogin()
                         .loginPage("/login")

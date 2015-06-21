@@ -1,6 +1,7 @@
 package com.yaroslav.hotel.dao;
 
 import com.yaroslav.hotel.entity.User;
+import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -17,10 +18,11 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User getUserByLogin(String login) {
-        return (User) sessionFactory
+        Query query = sessionFactory
                 .getCurrentSession()
                 .createQuery("from User u where u.login = :login")
-                .setParameter("login", login)
+                .setParameter("login", login);
+        return (User) query
                 .uniqueResult();
     }
 

@@ -1,3 +1,4 @@
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: employee
@@ -27,6 +28,10 @@
         <li><a href="/rooms/new">Add room</a></li>
         <li><a href="/rooms/search">Search</a></li>
         <li><a href="/login">Login</a></li>
+        <li><a href="/registration">Registration</a></li>
+        <sec:authorize access="isAuthenticated()">
+          <li><a href="/j_spring_security_logout">Logout</a></li>
+        </sec:authorize>
       </ul>
     </div><!-- /.navbar-collapse -->
   </nav>

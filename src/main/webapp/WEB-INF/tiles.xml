@@ -29,7 +29,10 @@
     </definition>
 
     <definition name="login" extends="DefaultTemplate">
-        <put-attribute name="search" value="/WEB-INF/template/login/body.jsp"/>
+        <put-attribute name="body" value="/WEB-INF/template/login/body.jsp"/>
     </definition>
 
+    <definition name="registration" extends="DefaultTemplate">
+        <put-attribute name="body" value="/WEB-INF/template/registration/body.jsp"/>
+    </definition>
 </tiles-definitions>

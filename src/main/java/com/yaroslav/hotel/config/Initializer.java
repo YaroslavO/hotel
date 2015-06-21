@@ -10,7 +10,7 @@ public class Initializer extends
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[] { DatabaseConfig.class };
+        return new Class[] { DatabaseConfig.class, SecurityConfig.class };
     }
 
     @Override
