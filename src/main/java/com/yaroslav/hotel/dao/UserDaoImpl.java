@@ -1,9 +1,8 @@
 package com.yaroslav.hotel.dao;
 
 import com.yaroslav.hotel.entity.User;
-import org.hibernate.Query;
-import org.hibernate.SQLQuery;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -19,14 +18,12 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User getUserByLogin(String login) {
-        SQLQuery query = sessionFactory
+        User user = (User) sessionFactory
                 .getCurrentSession()
-                .createSQLQuery("SELECT * from \"USER\" u where u.login = :login");
-        query.addEntity(User.class);
-        query.setParameter("login", login)
-                .setMaxResults(1);
-        User user = (User) query
+                .createCriteria(User.class)
+                .add(Restrictions.eq("login", login))
                 .uniqueResult();
+
         return user;
     }
 
