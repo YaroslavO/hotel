@@ -9,6 +9,6 @@ import org.springframework.context.annotation.Import;
  */
 @Configuration
 @ComponentScan(value = {"com.yaroslav.hotel.dao.*", "com.yaroslav.hotel.service.*"})
-@Import(DatabaseConfig.class)
+@Import(DatabaseConfigTest.class)
 public class AppConfigTest {
 }
