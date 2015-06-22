@@ -177,7 +177,6 @@
                 <configuration>
                     <verbose>true</verbose>
                     <fork>true</fork>
-                    <!-- <executable></executable> -->
                     <source>1.8</source>
                     <target>1.8</target>
                     <compilerVersion>1.8</compilerVersion>
@@ -192,5 +191,6 @@
                 </configuration>
             </plugin>
         </plugins>
+
     </build>
 </project>

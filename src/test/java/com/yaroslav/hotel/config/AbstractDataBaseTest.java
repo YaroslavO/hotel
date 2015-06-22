@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
  * Created by employee on 6/5/15.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-//@ContextConfiguration(classes = {AppConfigTest.class})
+@ContextConfiguration(classes = {AppConfigTest.class})
 @Transactional
 @TransactionConfiguration(defaultRollback = true)
 public abstract class AbstractDataBaseTest {
