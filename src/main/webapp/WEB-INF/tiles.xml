@@ -9,6 +9,7 @@
         <put-attribute name="header" value="/WEB-INF/template/template/header.jsp"/>
         <put-attribute name="menu" value="/WEB-INF/template/template/menu/usualMenu.jsp"/>
         <put-attribute name="adminMenu" value="/WEB-INF/template/template/menu/adminMenu.jsp"/>
+        <put-attribute name="maidMenu" value="/WEB-INF/template/template/menu/maidMenu.jsp"/>
         <put-attribute name="body" value=""/>
         <put-attribute name="footer" value="/WEB-INF/template/template/footer.jsp"/>
     </definition>

@@ -38,6 +38,10 @@
             <tiles:insertAttribute name="adminMenu"/>
         </sec:authorize>
 
+        <sec:authorize access="isAuthenticated() and hasRole('Maid')">
+            <tiles:insertAttribute name="maidMenu"/>
+        </sec:authorize>
+
         <div class="col-lg-9 col-lg-offset-1">
             <tiles:insertAttribute name="search"/>
             <tiles:insertAttribute name="body"/>
