@@ -18,17 +18,17 @@ public class AnonimController {
     @Autowired
     private HotelRoomService hotelRoomService;
 
-    @RequestMapping(name = "/rooms", method = RequestMethod.GET)
+    @RequestMapping(value = "/rooms", method = RequestMethod.GET)
     public String getRoomForReservation(ModelMap modelMap) {
         modelMap.addAttribute("rooms", hotelRoomService.getAllRoom());
 
         return "allRooms";
     }
 
-    @RequestMapping(name = "/reserve/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/reserve/{id}", method = RequestMethod.GET)
     public String getRoomReservationPage(@PathVariable("id") Integer id,
                                          ModelMap modelMap) {
-
+        modelMap.addAttribute("idRoom", id);
         return "reservation";
     }
 }

@@ -9,7 +9,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/jquery-ui/jquery-ui.css"/>
 <script src="${pageContext.request.contextPath}/resources/jquery-ui/jquery-ui.js"></script>
-
+<style>
+    .dp-highlight .ui-state-default {
+        background: #ffe45c;
+        color: #FFF;
+    }
+</style>
 <script type="text/javascript">
     $(document).ready(function () {
 
@@ -57,7 +62,7 @@
             <div id="group-calendar" class="form-group-lg">
                 <div id="datepicker"></div>
                 <label>Select date:
-                    <form:input type="text" path="startDate" id="startDate"/>
+                    <form:input type="text" path="startDate" id="startDate" />
                     <form:input type="text" path="endDate" id="endDate"/>
                 </label>
             </div>
