@@ -31,9 +31,9 @@
                 <!-- Echo all executed SQL to stdout -->
                 <prop key="hibernate.show_sql">true</prop>
                 <prop key="hibernate.format_sql">true</prop>
+
                 <!-- Drop and re-create the database schema on startup -->
                 <prop key="hibernate.hbm2ddl.auto">update</prop>
-                <!--<mapping package="com.yaroslav.hotel.entity"/>-->
             </props>
         </property>
         <property name="packagesToScan" value="com.yaroslav.hotel.entity"/>
