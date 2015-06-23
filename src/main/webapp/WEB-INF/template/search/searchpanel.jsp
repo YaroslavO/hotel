@@ -14,7 +14,6 @@
     $(document).ready(function () {
 
         $.datepicker.setDefaults({
-            selectOtherMonths: true,
             firstDay: 1,
             dateFormat: $.datepicker.W3C
         });

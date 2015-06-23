@@ -22,16 +22,16 @@ import static org.mockito.Mockito.verify;
 public class UserServiceImplTest {
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @Autowired
-    UserDao userDao;
+    private UserDao userDao;
 
     @Test
     public void saveUser() throws Exception {
         User user = new User();
 
-        userService.save(user);
+        userService.save(user, "Admin");
 
         verify(userDao).save(user);
     }

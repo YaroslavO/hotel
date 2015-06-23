@@ -27,15 +27,16 @@ public class UserController {
         return "login";
     }
 
-    @RequestMapping(value = "/registration", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/registration", method = RequestMethod.GET)
     public String register(ModelMap model) {
         model.addAttribute("user", new User());
         return "registration";
     }
 
-    @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public String addNewUser(@ModelAttribute("user") User user) {
-        userService.save(user);
+    @RequestMapping(value = "/admin/registration", method = RequestMethod.POST)
+    public String addNewUser(@ModelAttribute("user") User user,
+                             @RequestParam("role") String role) {
+        userService.save(user, role);
 
         return "redirect:/login";
     }

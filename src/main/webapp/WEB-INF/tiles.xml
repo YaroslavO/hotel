@@ -7,7 +7,8 @@
     <definition name="DefaultTemplate" template="/WEB-INF/template/template/template.jsp">
         <put-attribute name="search" value=""/>
         <put-attribute name="header" value="/WEB-INF/template/template/header.jsp"/>
-        <put-attribute name="menu" value="/WEB-INF/template/template/menu.jsp"/>
+        <put-attribute name="menu" value="/WEB-INF/template/template/menu/usualMenu.jsp"/>
+        <put-attribute name="adminMenu" value="/WEB-INF/template/template/menu/adminMenu.jsp"/>
         <put-attribute name="body" value=""/>
         <put-attribute name="footer" value="/WEB-INF/template/template/footer.jsp"/>
     </definition>
@@ -35,4 +36,13 @@
     <definition name="registration" extends="DefaultTemplate">
         <put-attribute name="body" value="/WEB-INF/template/registration/body.jsp"/>
     </definition>
+
+    <definition name="allRooms" extends="DefaultTemplate">
+        <put-attribute name="body" value="/WEB-INF/template/rooms/body.jsp"/>
+    </definition>
+
+    <definition name="reservation" extends="DefaultTemplate">
+        <put-attribute name="body" value="/WEB-INF/template/reservation/body.jsp"/>
+    </definition>
+
 </tiles-definitions>

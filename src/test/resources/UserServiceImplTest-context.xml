@@ -8,4 +8,8 @@
        <bean class="org.mockito.Mockito" factory-method="mock">
               <constructor-arg value="com.yaroslav.hotel.dao.UserDao"/>
        </bean>
+
+       <bean class="org.mockito.Mockito" factory-method="mock">
+              <constructor-arg value="com.yaroslav.hotel.dao.RoleDao"/>
+       </bean>
 </beans>

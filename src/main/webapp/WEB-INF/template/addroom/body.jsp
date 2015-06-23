@@ -15,7 +15,7 @@
     <label for="type">Select room type </label>
 
     <div class="input-group-lg">
-      <form:select path="type" id="type">
+      <form:select cssClass="form-control" path="type" id="type">
         <form:option value="SGL"/>
         <form:option value="DBL"/>
       </form:select>
@@ -26,7 +26,7 @@
     <label for="class">Select room type </label>
 
     <div class="input-group-lg">
-      <form:select path="classRoom" id="class">
+      <form:select cssClass="form-control" path="classRoom" id="class">
         <form:option value="LUX"/>
         <form:option value="STANDARD"/>
         <form:option value="ECONOM"/>

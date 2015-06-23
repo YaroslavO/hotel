@@ -8,5 +8,5 @@ import com.yaroslav.hotel.entity.User;
 public interface UserService {
     User getUserByLogin(String login);
 
-    void save(User user);
+    void save(User user, String role);
 }

@@ -1,9 +1,8 @@
-<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: employee
-  Date: 6/16/15
-  Time: 3:45 PM
+  Date: 6/23/15
+  Time: 3:27 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -27,11 +26,8 @@
         <li><a href="/rooms">Viewing rooms</a></li>
         <li><a href="/rooms/new">Add room</a></li>
         <li><a href="/rooms/search">Search</a></li>
-        <li><a href="/login">Login</a></li>
-        <li><a href="/registration">Registration</a></li>
-        <sec:authorize access="isAuthenticated()">
-          <li><a href="/j_spring_security_logout">Logout</a></li>
-        </sec:authorize>
+        <li><a href="/registration">Registration new customer</a></li>
+        <li><a href="/j_spring_security_logout">Logout</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->
   </nav>

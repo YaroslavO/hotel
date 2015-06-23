@@ -11,17 +11,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.util.Calendar;
-import java.util.Date;
-
 /**
  * Created by PC on 11.06.2015.
  */
 
 @Controller
-@RequestMapping(value = "/rooms")
-public class HotelRoomController {
-// todo try redirect attributes
+@RequestMapping(value = "/admin/rooms")
+public class AdminController {
+
     @Autowired
     private HotelRoomService hotelRoomService;
 

@@ -10,7 +10,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <div class="row">
     <div class="col-lg-6 col-lg-offset-3 well">
-        <form:form action="/registration" method="POST" modelAttribute="user" id="form" commandName="user"
+        <form:form action="/admin/registration" method="POST" modelAttribute="user" id="form" commandName="user"
                    class="form">
 
             <div class="form-group">
@@ -23,6 +23,13 @@
                 <label for="password">Password</label>
                 <form:input type="password" class="form-control" id="password" path="password" name="password"
                             placeholder=""/>
+            </div>
+
+            <div class="form-group">
+                <form:select cssClass="form-control" name="role" path="">
+                    <form:option value="Maid"/>
+                    <form:option value="Booker"/>
+                </form:select>
             </div>
 
             <input type="submit" name="submit" id="submit" value="Створити"
