@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:p="http://www.springframework.org/schema/p" xmlns:tx="http://www.springframework.org/schema/tx"
+
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!-- Tell the container that we are going to use annotations -->
+    <!--<context:annotation-config />-->
+    <!--<context:component-scan base-package="com.yaroslav.hotel"/>-->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <bean id="propertyConfigurer"
+          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
+          p:location="databaseTest.properties" />
+
+    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource"
+          destroy-method="close" p:driverClassName="${db.driver}"
+          p:url="${db.url}"
+          p:username="${db.username}" p:password="${db.password}" />
+
+    <bean id="sessionFactory"
+          class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.HSQLDialect</prop>
+
+                <!-- Echo all executed SQL to stdout -->
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.format_sql">true</prop>
+                <!-- Drop and re-create the database schema on startup -->
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+                <!--<mapping package="com.yaroslav.hotel.entity"/>-->
+            </props>
+        </property>
+        <property name="packagesToScan" value="com.yaroslav.hotel.entity"/>
+    </bean>
+
+    <bean id="transactionManager"  class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <context:component-scan base-package="com.yaroslav.hotel.dao"/>
+
+</beans>

@@ -19,16 +19,13 @@ import static org.mockito.Mockito.verify;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextHierarchy({
-        @ContextConfiguration(classes = {DatabaseConfigTest.class}),
         @ContextConfiguration(locations = {"classpath:UserServiceImplTest-context.xml"})
 })
 public class UserServiceImplTest {
 
-    @Qualifier("userServiceImpl")
     @Autowired
     UserService userService;
 
-    @Qualifier("userDaoImpl")
     @Autowired
     UserDao userDao;
 
