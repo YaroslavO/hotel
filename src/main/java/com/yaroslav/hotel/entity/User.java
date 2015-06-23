@@ -4,6 +4,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -12,17 +13,17 @@ import java.util.List;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements Serializable {
 
     @Id
     @Column(name = "id")
     @GeneratedValue
     private Integer id;
 
-    @Column(name = "login")
+    @Column(name = "login", unique = true, nullable = false)
     private String login;
 
-    @Column(name = "password")
+    @Column(name = "password", nullable = false)
     private String password;
 
     @ManyToMany(fetch = FetchType.LAZY)
