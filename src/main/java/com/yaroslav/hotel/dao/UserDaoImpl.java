@@ -3,6 +3,7 @@ package com.yaroslav.hotel.dao;
 import com.yaroslav.hotel.entity.User;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

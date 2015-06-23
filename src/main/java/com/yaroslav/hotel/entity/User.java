@@ -33,6 +33,14 @@ public class User implements Serializable {
             inverseJoinColumns = {@JoinColumn(name = "ifk_role", referencedColumnName = "id")})
     private List<Role> roles;
 
+    public User() {
+    }
+
+    public User(String login, String password) {
+        this.login = login;
+        this.password = password;
+    }
+
     public Integer getId() {
         return id;
     }
