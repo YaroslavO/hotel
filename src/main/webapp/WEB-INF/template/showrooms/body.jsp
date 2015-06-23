@@ -24,20 +24,11 @@
             <td>${room.type}</td>
             <td>${room.classRoom}</td>
             <td>
-                <form action="/reserve/${room.id}" method="POST" class="form-horizontal">
-
-                    <label for="SnapHost_Calendar2">Choose period</label>
-                    <input type="date" name="startDate" id="SnapHost_Calendar2"/> -
-                    <input type="date" name="endDate"/>
-
+                <form action="/rooms/${room.id}" method="DELETE" class="form-horizontal">
                     <input type="submit"
-                           value="reservation"
-                           class="btn btn-info pull-right"/>
+                           value="delete room"
+                           class="btn btn-danger"/>
                 </form>
-            </td>
-            <td>
-                <a data-method="delete" href="/rooms/${room.id}" class="btn btn-danger"><i
-                        class="icon-white icon-trash"></i></a>
             </td>
         </tr>
     </c:forEach>
