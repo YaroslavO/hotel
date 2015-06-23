@@ -35,4 +35,11 @@ public class UserServiceImplTest {
 
         verify(userDao).save(user);
     }
+
+    @Test
+    public void getUserByLogin() throws Exception {
+        userService.getUserByLogin("root");
+
+        verify(userDao).getUserByLogin("root");
+    }
 }
