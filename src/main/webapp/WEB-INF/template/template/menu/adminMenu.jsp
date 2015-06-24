@@ -23,10 +23,10 @@
     <div class="collapse navbar-collapse navbar-ex1-collapse">
       <ul class="nav navbar-nav">
         <li><a href="/">Main</a></li>
-        <li><a href="/rooms">Viewing rooms</a></li>
-        <li><a href="/rooms/new">Add room</a></li>
-        <li><a href="/rooms/search">Search</a></li>
-        <li><a href="/registration">Registration new customer</a></li>
+        <li><a href="/admin/rooms">Viewing rooms</a></li>
+        <li><a href="/admin/rooms/new">Add room</a></li>
+        <li><a href="/admin/rooms/search">Search</a></li>
+        <li><a href="/admin/registration">Registration new customer</a></li>
         <li><a href="/j_spring_security_logout">Logout</a></li>
       </ul>
     </div><!-- /.navbar-collapse -->

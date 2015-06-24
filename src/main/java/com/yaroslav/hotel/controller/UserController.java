@@ -36,8 +36,9 @@ public class UserController {
     @RequestMapping(value = "/admin/registration", method = RequestMethod.POST)
     public String addNewUser(@ModelAttribute("user") User user,
                              @RequestParam("role") String role) {
+        role = "ROLE_" + role;
         userService.save(user, role);
 
-        return "redirect:/login";
+        return "redirect:/";
     }
 }

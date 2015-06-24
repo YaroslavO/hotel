@@ -31,6 +31,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void save(User user, String role) {
+        role = role.toUpperCase();
+
         Role roleEntity = roleDao.getRoleByName(role);
         List<Role> roles = new ArrayList<>();
         roles.add(roleEntity);

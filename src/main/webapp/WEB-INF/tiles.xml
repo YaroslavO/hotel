@@ -46,4 +46,7 @@
         <put-attribute name="body" value="/WEB-INF/template/reservation/body.jsp"/>
     </definition>
 
+    <definition name="maidRooms" extends="DefaultTemplate">
+        <put-attribute name="body" value="/WEB-INF/template/rooms/maidBody.jsp"/>
+    </definition>
 </tiles-definitions>

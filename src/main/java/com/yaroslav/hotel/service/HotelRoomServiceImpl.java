@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -55,5 +56,16 @@ public class HotelRoomServiceImpl implements HotelRoomService {
     @Override
     public void delete(HotelRoom room) {
         hotelRoom.deleteHotelRoom(room);
+    }
+
+    @Override
+    public List<HotelRoom> getMaidRoomsThisDay() {
+        Calendar thisDay = Calendar.getInstance();
+        thisDay.set(Calendar.HOUR_OF_DAY, 0);
+        thisDay.set(Calendar.MINUTE, 0);
+        thisDay.set(Calendar.SECOND, 0);
+        thisDay.set(Calendar.MILLISECOND, 0);
+
+        return hotelRoom.getMaidRoomsOnDay(thisDay.getTime());
     }
 }

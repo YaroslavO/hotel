@@ -87,6 +87,23 @@ public class HotelRoomDaoImpl implements HotelRoomDao {
         return allQuery.list();
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<HotelRoom> getMaidRoomsOnDay(java.util.Date thisDay) {
+        String stringQuery = "select hr from HotelRoom hr, Maid m, Reservation r where " +
+                "hr.id = r.hotelRoom and " +
+                "m.date <> :date and " +
+                "m.reservation = r.id and " +
+                ":date between r.startDate and r.endDate ";
+
+        Query query = sessionFactory
+                .getCurrentSession()
+                .createQuery(stringQuery)
+                .setParameter("date", thisDay);
+
+        return query.list();
+    }
+
     private void setSafeQueryParameter(Query q, String paramName, Object paramValue) {
         if (paramValue == null) return;
 

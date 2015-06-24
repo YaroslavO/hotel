@@ -34,11 +34,11 @@
             <tiles:insertAttribute name="menu"/>
         </sec:authorize>
 
-        <sec:authorize access="isAuthenticated() and hasRole('Admin')">
+        <sec:authorize access="isAuthenticated() and hasRole('ADMIN')">
             <tiles:insertAttribute name="adminMenu"/>
         </sec:authorize>
 
-        <sec:authorize access="isAuthenticated() and hasRole('Maid')">
+        <sec:authorize access="isAuthenticated() and hasRole('MAID')">
             <tiles:insertAttribute name="maidMenu"/>
         </sec:authorize>
 

@@ -19,4 +19,6 @@ public interface HotelRoomService {
     void addHotelRoom(HotelRoom room);
 
     void delete(HotelRoom room);
+
+    List<HotelRoom> getMaidRoomsThisDay();
 }
