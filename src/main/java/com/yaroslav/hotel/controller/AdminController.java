@@ -2,14 +2,17 @@ package com.yaroslav.hotel.controller;
 
 import com.yaroslav.hotel.entity.*;
 import com.yaroslav.hotel.exception.SearchNullParameterException;
+import com.yaroslav.hotel.resources.HotelRoomResources;
 import com.yaroslav.hotel.service.HotelRoomService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * Created by PC on 11.06.2015.
@@ -22,12 +25,11 @@ public class AdminController {
     @Autowired
     private HotelRoomService hotelRoomService;
 
+    // i don't know use it or not use
     @RequestMapping(value = "/new", method = RequestMethod.GET)
-    public String getCreateNewRoomPage(ModelMap modelMap) {
-        modelMap.addAttribute("textHeader", "Add new hotel room in database");
-        modelMap.addAttribute("room", new HotelRoom());
+    public ResponseEntity<HotelRoom> getCreateNewRoomPage() {
 
-        return "addroom";
+        return new ResponseEntity<HotelRoom>(new HotelRoom(), HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -37,13 +39,18 @@ public class AdminController {
         return "redirect:/";
     }
 
+    //it's rigth method
     @RequestMapping(method = RequestMethod.GET)
-    public String getRooms(ModelMap modelMap) {
-        modelMap.addAttribute("textHeader", "Show all rooms");
-        modelMap.addAttribute("rooms", hotelRoomService.getAllRoom());
-        modelMap.addAttribute("searchForm", new SearchFormEntity());
+    public ResponseEntity<HotelRoomResources> getRooms() {
+        List<HotelRoom> rooms = hotelRoomService.getAllRoom();
+        HotelRoomResources hotelRoomResources = new HotelRoomResources();
+        hotelRoomResources.setRooms(rooms);
 
-        return "showrooms";
+        if (rooms != null) {
+            return new ResponseEntity<>(hotelRoomResources, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @RequestMapping(value = "/search", method = RequestMethod.GET)

@@ -20,28 +20,12 @@ import org.springframework.web.servlet.view.tiles3.TilesView;
 @ComponentScan("com.yaroslav.hotel")
 public class WebAppConfig extends WebMvcConfigurerAdapter {
 
-    @Bean
-    public UrlBasedViewResolver viewResolver() {
-        UrlBasedViewResolver viewResolver = new UrlBasedViewResolver();
-        viewResolver.setViewClass(TilesView.class);
-        viewResolver.setOrder(1);
-        return viewResolver;
-    }
-
-    @Bean
-    public TilesConfigurer tilesConfigurer() {
-        TilesConfigurer tilesConfigurer = new TilesConfigurer();
-        tilesConfigurer.setDefinitions("/WEB-INF/tiles.xml");
-        tilesConfigurer.setCheckRefresh(true);
-        return tilesConfigurer;
-    }
-
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
         configurer.enable();
     }
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/resources/**").addResourceLocations("/resources/");
+        registry.addResourceHandler("/app/**").addResourceLocations("/app/build");
     }
 }

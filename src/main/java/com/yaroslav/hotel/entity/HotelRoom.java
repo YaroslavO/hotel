@@ -22,9 +22,6 @@ public class HotelRoom {
     @Enumerated(value = EnumType.STRING)
     private BudgetRoomType classRoom;
 
-    private String stringType;
-    private String stringClass;
-
     public HotelRoom() {
     }
 
@@ -55,22 +52,6 @@ public class HotelRoom {
 
     public void setClassRoom(BudgetRoomType classRoom) {
         this.classRoom = classRoom;
-    }
-
-    public String getStringType() {
-        return stringType;
-    }
-
-    public void setStringType(String stringType) {
-        this.stringType = stringType;
-    }
-
-    public String getStringClass() {
-        return stringClass;
-    }
-
-    public void setStringClass(String stringClass) {
-        this.stringClass = stringClass;
     }
 
     @Override

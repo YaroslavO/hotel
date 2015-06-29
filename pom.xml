@@ -27,7 +27,7 @@
     </dependencyManagement>
 
     <dependencies>
-         <!--data base-->
+        <!--data base-->
         <dependency>
             <groupId>org.hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
@@ -61,49 +61,6 @@
             <version>${hibernate.version}</version>
         </dependency>
 
-        <!--unit test-->
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <version>2.0.8-beta</version>
-            <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <artifactId>hamcrest-core</artifactId>
-                    <groupId>org.hamcrest</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
-            <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <artifactId>hamcrest-core</artifactId>
-                    <groupId>org.hamcrest</groupId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.hamcrest</groupId>
-            <artifactId>hamcrest-core</artifactId>
-            <version>1.3</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.hamcrest</groupId>
-            <artifactId>hamcrest-library</artifactId>
-            <version>1.3</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-
         <!--spring-->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -127,6 +84,12 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.hateoas</groupId>
+            <artifactId>spring-hateoas</artifactId>
+            <version>0.17.0.RELEASE</version>
+        </dependency>
+
         <!--web-->
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -180,17 +143,84 @@
             <artifactId>slf4j-simple</artifactId>
             <version>1.7.5</version>
         </dependency>
+
+        <!--JSON Processing-->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>2.5.4</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>2.5.4</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.5.4</version>
+        </dependency>
+
+        <!--unit test-->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>2.0.8-beta</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <artifactId>hamcrest-core</artifactId>
+                    <groupId>org.hamcrest</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <artifactId>hamcrest-core</artifactId>
+                    <groupId>org.hamcrest</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-core</artifactId>
+            <version>1.3</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-library</artifactId>
+            <version>1.3</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <!--&lt;!&ndash;<dependency>&ndash;&gt;  delete all in up and on this section when migrate on angular-->
+            <!--<groupId>javax.servlet</groupId>-->
+            <!--<artifactId>javax.servlet-api</artifactId>-->
+            <!--<version>3.1.0</version>-->
+            <!--<scope>test</scope>-->
+        <!--</dependency>-->
+
     </dependencies>
 
-    <repositories>
-        <repository>
-            <id>io.spring.repo.maven.release</id>
-            <url>http://repo.spring.io/release/</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
+    <!--<repositories>-->
+        <!--<repository>-->
+            <!--<id>io.spring.repo.maven.release</id>-->
+            <!--<url>http://repo.spring.io/release/</url>-->
+            <!--<snapshots>-->
+                <!--<enabled>false</enabled>-->
+            <!--</snapshots>-->
+        <!--</repository>-->
+    <!--</repositories>-->
 
     <build>
         <plugins>

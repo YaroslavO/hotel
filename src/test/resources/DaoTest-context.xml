@@ -8,8 +8,6 @@
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <!-- Tell the container that we are going to use annotations -->
-    <!--<context:annotation-config />-->
-    <!--<context:component-scan base-package="com.yaroslav.hotel"/>-->
     <tx:annotation-driven transaction-manager="transactionManager"/>
 
     <bean id="propertyConfigurer"
@@ -44,5 +42,6 @@
     </bean>
 
     <context:component-scan base-package="com.yaroslav.hotel.dao"/>
+    <context:component-scan base-package="com.yaroslav.hotel.service"/>
 
 </beans>
