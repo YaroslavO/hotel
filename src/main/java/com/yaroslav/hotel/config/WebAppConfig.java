@@ -26,6 +26,6 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/app/**").addResourceLocations("/app/build");
+        registry.addResourceHandler("/app/**").addResourceLocations("/app/build/");
     }
 }
